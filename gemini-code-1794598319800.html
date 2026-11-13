@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Essence - Catálogo Completo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #F8FAFC; color: #0B192C; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(11, 25, 44, 0.25); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(11, 25, 44, 0.4); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-blue-600/20 pb-24 lg:pb-0">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 py-3.5 flex justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#0B192C] to-blue-700 flex items-center justify-center text-white shadow-md shadow-blue-900/20 font-bold text-lg">
+                    💎
+                </div>
+                <div>
+                    <h1 id="header-store-name" class="text-base md:text-lg font-extrabold tracking-tight text-[#0B192C]">Blue Essence</h1>
+                    <p id="header-store-subtitle" class="text-[11px] text-slate-500 truncate max-w-[200px] sm:max-w-none">Extrait de Parfum 60ml • Línea Millanel</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <!-- Botón Carrito Móvil en Header -->
+                <button onclick="toggleMobileCartModal(true)" class="lg:hidden relative bg-blue-50 border border-blue-200 text-[#0B192C] p-2.5 rounded-xl font-bold flex items-center gap-1.5 cursor-pointer">
+                    <span class="text-base">🛒</span>
+                    <span id="mobile-cart-badge" class="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-extrabold shadow-sm">0</span>
+                </button>
+
+                <button onclick="requestAdminAccess()" class="bg-[#0B192C] hover:bg-blue-900 text-white text-xs px-3 py-2.5 rounded-xl font-semibold transition flex items-center gap-1.5 cursor-pointer shadow-sm">
+                    <span>🔒</span>
+                    <span class="hidden sm:inline">Panel Vendedor</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-3 sm:px-4 py-6 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
+        
+        <!-- Left Column: Catalog -->
+        <div class="lg:col-span-8 space-y-6">
+            
+            <!-- Wholesale Tiers Banner -->
+            <div class="bg-gradient-to-br from-[#0B192C] via-blue-950 to-blue-900 rounded-2xl p-5 sm:p-6 shadow-xl text-white border border-blue-900 relative overflow-hidden">
+                <div class="relative z-10">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <span class="bg-blue-600/40 text-blue-200 border border-blue-400/30 text-[10px] sm:text-[11px] px-3 py-1 rounded-full font-semibold uppercase tracking-wider">Escala Mayorista 60ml</span>
+                        <span class="text-[11px] text-blue-200/80">Descuento automático por cantidad</span>
+                    </div>
+                    <h2 class="text-xl sm:text-3xl font-extrabold mt-2 sm:mt-3 text-white tracking-tight">Precios por Cantidad</h2>
+                    <div id="tiers-banner-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-3 sm:mt-4 text-xs">
+                        <!-- Dynamic tiers -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de Nuevos Ingresos / Novedades -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-3">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs sm:text-sm font-extrabold text-[#0B192C] flex items-center gap-2">
+                        <span>✨</span> <span>Nuevos Ingresos / Destacados</span>
+                    </h3>
+                    <span class="text-[10px] bg-blue-100 text-blue-800 font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">Última Selección</span>
+                </div>
+                <div id="new-arrivals-carousel" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <!-- New arrivals injected via JS -->
+                </div>
+            </div>
+
+            <!-- Filters & Search Bar -->
+            <div class="bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200 shadow-xs space-y-3.5">
+                <div id="category-filters" class="flex flex-wrap gap-1.5 sm:gap-2 overflow-x-auto pb-1">
+                    <button onclick="filterCategory('todos', this)" class="cat-btn bg-[#0B192C] text-white font-semibold px-3 py-2 rounded-xl text-xs transition cursor-pointer whitespace-nowrap">Todos (<span id="total-count-badge">191</span>)</button>
+                    <button onclick="filterCategory('Femeninos', this)" class="cat-btn bg-slate-100 text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer whitespace-nowrap">Femeninos</button>
+                    <button onclick="filterCategory('Masculinos', this)" class="cat-btn bg-slate-100 text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer whitespace-nowrap">Masculinos</button>
+                    <button onclick="filterCategory('Unisex', this)" class="cat-btn bg-slate-100 text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer whitespace-nowrap">Unisex</button>
+                    <button onclick="filterCategory('Árabes Femeninos', this)" class="cat-btn bg-slate-100 text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer whitespace-nowrap">Árabes Fem.</button>
+                    <button onclick="filterCategory('Árabes Masculinos', this)" class="cat-btn bg-slate-100 text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer whitespace-nowrap">Árabes Masc.</button>
+                    <button onclick="filterCategory('Árabes Unisex', this)" class="cat-btn bg-slate-100 text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer whitespace-nowrap">Árabes Unisex</button>
+                    <button onclick="filterCategory('Perfumes Millanel', this)" class="cat-btn bg-purple-100 text-purple-800 hover:bg-purple-200 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap">✨ Perfumes Millanel</button>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-2">
+                    <div class="relative flex-grow">
+                        <span class="absolute inset-y-0 left-3.5 flex items-center text-slate-400 text-sm">🔍</span>
+                        <input type="text" id="search-input" oninput="renderCatalog()" placeholder="Buscar perfume, diseñador o nota aromática..." class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-slate-800 focus:outline-none focus:border-blue-600 transition">
+                    </div>
+                    <label class="flex items-center gap-2 text-xs text-slate-600 bg-slate-50 border border-slate-200 px-3.5 py-2.5 rounded-xl cursor-pointer select-none justify-center sm:justify-start">
+                        <input type="checkbox" id="only-available" onchange="renderCatalog()" class="accent-blue-600 rounded">
+                        <span>Solo con stock</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-2 gap-2.5 sm:gap-4">
+                <!-- Products injected via JS -->
+            </div>
+        </div>
+
+        <!-- Right Column: Cart & Checkout (Desktop) -->
+        <div class="hidden lg:block lg:col-span-4">
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 sticky top-20 shadow-xl flex flex-col max-h-[calc(100vh-96px)]">
+                <div class="flex items-center justify-between pb-3.5 border-b border-slate-200">
+                    <div>
+                        <h3 class="text-lg font-extrabold text-[#0B192C]">Tu Selección</h3>
+                        <p class="text-[11px] text-slate-500">Cálculo de escala en vivo</p>
+                    </div>
+                    <span id="cart-count" class="bg-[#0B192C] text-white text-xs px-3 py-1 rounded-full font-bold">0 un.</span>
+                </div>
+
+                <div id="cart-items" class="flex-grow overflow-y-auto divide-y divide-slate-100 py-2 my-1 min-h-[110px]">
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 space-y-2.5 overflow-y-auto pr-0.5">
+                    <div id="tier-badge-container" class="bg-blue-50 border border-blue-200 rounded-xl p-2 text-center text-[11px] text-blue-900 font-medium">
+                        Agregá fragancias para calcular tu descuento
+                    </div>
+
+                    <div>
+                        <label class="text-[11px] text-slate-600 font-semibold block mb-1">Zona de Entrega / Reparto:</label>
+                        <select id="shipping-zone" onchange="updateCartUI()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                        </select>
+                    </div>
+
+                    <div class="space-y-2 pt-1">
+                        <p class="text-[11px] text-slate-600 font-semibold">Datos del Comprador:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <input type="text" id="client-name" placeholder="Nombre y Apellido *" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                            <input type="tel" id="client-phone" placeholder="Teléfono / WhatsApp" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                        </div>
+                        <input type="text" id="client-address" placeholder="Dirección exacta (Calle, N°, Ciudad) *" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <select id="client-payment" onchange="togglePaymentDetails()" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                                <option value="Efectivo">💵 Efectivo</option>
+                                <option value="Transferencia">🏦 Transferencia</option>
+                            </select>
+                            <input type="text" id="client-change" placeholder="¿Con cuánto abonás?" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                        </div>
+
+                        <div id="transfer-info-box" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-[11px] text-blue-900">
+                            <span class="font-semibold block">Datos para Transferencia:</span>
+                            <span id="display-seller-alias" class="font-mono select-all">blue.essence.mp</span>
+                        </div>
+
+                        <input type="text" id="client-notes" placeholder="Notas opcionales (ej. timbre, horario...)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                    </div>
+
+                    <div class="space-y-1 pt-2 border-t border-slate-200">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Subtotal Fragancias</span>
+                            <span id="cart-subtotal" class="font-semibold">$0</span>
+                        </div>
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Costo de Envío</span>
+                            <span id="cart-shipping" class="font-semibold">$0</span>
+                        </div>
+                        <div class="flex justify-between items-center text-base font-extrabold pt-1.5 border-t border-slate-100">
+                            <span>Total Final</span>
+                            <span id="cart-total" class="text-blue-700">$0</span>
+                        </div>
+                    </div>
+
+                    <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-emerald-600/20 text-xs uppercase tracking-wider">
+                        <span>📲 Enviar Pedido por WhatsApp</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Botón Flotante de Carrito para Celulares -->
+    <div id="mobile-floating-cart" class="lg:hidden fixed bottom-20 inset-x-4 z-40 transition-all duration-300 transform translate-y-32">
+        <button onclick="toggleMobileCartModal(true)" class="w-full bg-[#0B192C] text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center justify-between border border-blue-900/50 cursor-pointer">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-base shadow-inner">
+                    🛒
+                </div>
+                <div class="text-left">
+                    <span id="floating-cart-units" class="block text-xs font-extrabold">0 unidades seleccionadas</span>
+                    <span id="floating-cart-total" class="text-sm font-black text-blue-300">$0</span>
+                </div>
+            </div>
+            <div class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5">
+                <span>Ver Carrito</span>
+                <span>➔</span>
+            </div>
+        </button>
+    </div>
+
+    <!-- Modal Deslizable de Carrito para Celulares -->
+    <div id="mobile-cart-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex flex-col justify-end lg:hidden">
+        <div class="bg-white rounded-t-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <div>
+                    <h3 class="text-base font-extrabold text-[#0B192C]">🛒 Tu Carrito de Compras</h3>
+                    <p class="text-[11px] text-slate-500">Escala de precios y datos de envío</p>
+                </div>
+                <button onclick="toggleMobileCartModal(false)" class="w-8 h-8 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold text-sm cursor-pointer">✕</button>
+            </div>
+
+            <div class="p-4 overflow-y-auto space-y-4 flex-grow">
+                <div id="mobile-tier-badge-container" class="bg-blue-50 border border-blue-200 rounded-xl p-2 text-center text-[11px] text-blue-900 font-medium">
+                    Calculando descuento...
+                </div>
+
+                <div id="mobile-cart-items" class="divide-y divide-slate-100 border-y border-slate-100 max-h-48 overflow-y-auto">
+                </div>
+
+                <div>
+                    <label class="text-[11px] text-slate-600 font-semibold block mb-1">Zona de Entrega / Reparto:</label>
+                    <select id="mobile-shipping-zone" onchange="syncAndEvaluateZones(this.value)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-blue-600">
+                    </select>
+                </div>
+
+                <div class="space-y-2 pt-1">
+                    <p class="text-[11px] text-slate-600 font-semibold">Datos del Comprador:</p>
+                    <div class="grid grid-cols-1 gap-2">
+                        <input type="text" id="mob-client-name" placeholder="Nombre y Apellido *" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                        <input type="tel" id="mob-client-phone" placeholder="Teléfono / WhatsApp" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                    </div>
+                    <input type="text" id="mob-client-address" placeholder="Dirección exacta (Calle, N°, Ciudad) *" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <select id="mob-client-payment" onchange="toggleMobilePaymentDetails()" class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                            <option value="Efectivo">💵 Efectivo</option>
+                            <option value="Transferencia">🏦 Transferencia</option>
+                        </select>
+                        <input type="text" id="mob-client-change" placeholder="¿Con cuánto abonás?" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                    </div>
+
+                    <div id="mob-transfer-info-box" class="hidden bg-blue-50 border border-blue-200 rounded-xl p-2.5 text-[11px] text-blue-900">
+                        <span class="font-semibold block">Datos para Transferencia:</span>
+                        <span id="mob-display-seller-alias" class="font-mono select-all">blue.essence.mp</span>
+                    </div>
+
+                    <input type="text" id="mob-client-notes" placeholder="Notas opcionales (ej. timbre, horario...)" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                </div>
+
+                <div class="space-y-1 pt-2 border-t border-slate-200">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-slate-500">Subtotal Fragancias</span>
+                        <span id="mob-cart-subtotal" class="font-semibold">$0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-slate-500">Costo de Envío</span>
+                        <span id="mob-cart-shipping" class="font-semibold">$0</span>
+                    </div>
+                    <div class="flex justify-between items-center text-base font-extrabold pt-1.5 border-t border-slate-100">
+                        <span>Total Final</span>
+                        <span id="mob-cart-total" class="text-blue-700">$0</span>
+                    </div>
+                </div>
+
+                <button onclick="checkoutWhatsAppMobile()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-lg text-xs uppercase tracking-wider">
+                    <span>📲 Enviar Pedido por WhatsApp</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-10 py-6 px-4 text-center text-xs text-slate-500 mb-14 lg:mb-0">
+        <p class="text-sm font-bold text-[#0B192C]" id="footer-store-name">Blue Essence</p>
+        <p class="mt-1" id="footer-seller-info">Atención personalizada y pedidos directos por WhatsApp</p>
+    </footer>
+
+    <!-- Modal: Panel del Vendedor -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-3xl w-full p-5 sm:p-6 space-y-4 max-h-[90vh] flex flex-col shadow-2xl">
+            
+            <div class="flex justify-between items-center pb-3 border-b border-slate-200">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-extrabold text-[#0B192C]">⚙️ Panel del Vendedor e Inventario</h3>
+                    <p class="text-[11px] sm:text-xs text-slate-500">Control numérico de stock, fotos, tarifas y datos.</p>
+                </div>
+                <button onclick="closeAdminModal()" class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 hover:text-slate-900 flex items-center justify-center font-bold cursor-pointer">✕</button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex gap-1.5 sm:gap-2 border-b border-slate-200 pb-2 overflow-x-auto">
+                <button onclick="switchAdminTab('tab-stock', this)" class="admin-tab-btn bg-[#0B192C] text-white px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer whitespace-nowrap">1. Inventario y Catálogo</button>
+                <button onclick="switchAdminTab('tab-prices', this)" class="admin-tab-btn bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer whitespace-nowrap">2. Precios y Zonas</button>
+                <button onclick="switchAdminTab('tab-seller', this)" class="admin-tab-btn bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer whitespace-nowrap">3. Datos Vendedor</button>
+            </div>
+
+            <!-- TAB 1: Inventario y Catálogo (Faltantes primero) -->
+            <div id="tab-stock" class="admin-tab-content flex-grow flex flex-col overflow-hidden space-y-3">
+                <div class="flex gap-2">
+                    <input type="text" id="admin-search" oninput="renderAdminList()" placeholder="🔍 Buscar perfume por nombre, diseñador o categoría..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 text-xs">
+                    <button onclick="openAddProductPrompt()" class="bg-[#0B192C] hover:bg-blue-900 text-white font-semibold px-3 py-2 rounded-xl text-xs whitespace-nowrap cursor-pointer">+ Agregar Perfume</button>
+                </div>
+                <div class="bg-amber-50 border border-amber-200 rounded-xl p-2 text-[11px] text-amber-900 flex items-center justify-between">
+                    <span>⚠️ Los perfumes <strong>sin stock (faltantes)</strong> aparecen siempre <strong>primeros en la lista</strong>.</span>
+                </div>
+                <div id="admin-products-list" class="flex-grow overflow-y-auto space-y-2 pr-2 divide-y divide-slate-100 max-h-[50vh]">
+                    <!-- Dynamic items -->
+                </div>
+            </div>
+
+            <!-- TAB 2: Precios y Zonas -->
+            <div id="tab-prices" class="admin-tab-content hidden flex-grow overflow-y-auto space-y-5 pr-1">
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-blue-800 mb-2">Catálogo General (60ml) ($)</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                            <label class="text-[11px] text-slate-500 block mb-1">1 a 4 un.</label>
+                            <input type="number" id="cfg-60-1" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                            <label class="text-[11px] text-slate-500 block mb-1">5 a 9 un.</label>
+                            <input type="number" id="cfg-60-5" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                            <label class="text-[11px] text-slate-500 block mb-1">10 a 60 un.</label>
+                            <input type="number" id="cfg-60-10" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                            <label class="text-[11px] text-slate-500 block mb-1">61+ un.</label>
+                            <input type="number" id="cfg-60-61" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-purple-800 mb-2">Perfumes Millanel • 30ml ($)</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">1 a 4 un.</label>
+                            <input type="number" id="cfg-m30-1" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">5 a 9 un.</label>
+                            <input type="number" id="cfg-m30-5" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">10 a 60 un.</label>
+                            <input type="number" id="cfg-m30-10" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">61+ un.</label>
+                            <input type="number" id="cfg-m30-61" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-purple-800 mb-2">Perfumes Millanel • 60ml ($)</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">1 a 4 un.</label>
+                            <input type="number" id="cfg-m60-1" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">5 a 9 un.</label>
+                            <input type="number" id="cfg-m60-5" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">10 a 60 un.</label>
+                            <input type="number" id="cfg-m60-10" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">61+ un.</label>
+                            <input type="number" id="cfg-m60-61" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-purple-800 mb-2">Perfumes Millanel • 100ml ($)</h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">1 a 4 un.</label>
+                            <input type="number" id="cfg-m100-1" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">5 a 9 un.</label>
+                            <input type="number" id="cfg-m100-5" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">10 a 60 un.</label>
+                            <input type="number" id="cfg-m100-10" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                        <div class="bg-purple-50/50 p-2.5 rounded-xl border border-purple-200">
+                            <label class="text-[11px] text-purple-700 block mb-1">61+ un.</label>
+                            <input type="number" id="cfg-m100-61" class="w-full bg-white border border-purple-300 rounded-lg px-2.5 py-1 text-xs font-bold">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-blue-800 mb-2">Tarifas de Envío ($)</h4>
+                    <div id="cfg-zones-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                </div>
+            </div>
+
+            <!-- TAB 3 -->
+            <div id="tab-seller" class="admin-tab-content hidden flex-grow overflow-y-auto space-y-4 pr-1">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-xs font-semibold text-slate-700 block mb-1">Nombre Tienda</label>
+                        <input type="text" id="cfg-store-name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-700 block mb-1">Responsable</label>
+                        <input type="text" id="cfg-seller-name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-700 block mb-1">WhatsApp (ej: 549341...)</label>
+                        <input type="text" id="cfg-seller-whatsapp" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold text-slate-700 block mb-1">Alias Transferencia</label>
+                        <input type="text" id="cfg-seller-alias" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="text-xs font-semibold text-slate-700 block mb-1">Contraseña del Panel Vendedor</label>
+                        <input type="text" id="cfg-admin-pass" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-mono">
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-slate-200 flex justify-between items-center">
+                <button onclick="resetAllDefaults()" class="text-xs text-red-500 hover:underline cursor-pointer">Restaurar fábrica</button>
+                <button onclick="saveSettingsAndClose()" class="bg-[#0B192C] hover:bg-blue-900 text-white text-xs px-5 py-2.5 rounded-xl font-bold transition cursor-pointer shadow">✓ Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Editar / Agregar Perfume -->
+    <div id="edit-product-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[60] hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-5 space-y-3.5 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <h4 class="text-lg font-bold text-[#0B192C]" id="edit-modal-title">Editar Fragancia</h4>
+            <div class="space-y-3">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs font-semibold block mb-1">Nombre:</label>
+                        <input type="text" id="edit-name-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold block mb-1">Diseñador / Marca:</label>
+                        <input type="text" id="edit-designer-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="text-xs font-semibold block mb-1">Categoría:</label>
+                        <select id="edit-category-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800">
+                            <option value="Femeninos">Femeninos</option>
+                            <option value="Masculinos">Masculinos</option>
+                            <option value="Unisex">Unisex</option>
+                            <option value="Árabes Femeninos">Árabes Femeninos</option>
+                            <option value="Árabes Masculinos">Árabes Masculinos</option>
+                            <option value="Árabes Unisex">Árabes Unisex</option>
+                            <option value="Perfumes Millanel">Perfumes Millanel</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="text-xs font-semibold block mb-1">Cantidad en Stock:</label>
+                        <input type="number" id="edit-stock-input" min="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-blue-800">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-xs font-semibold block mb-1">Familia Olfativa:</label>
+                    <input type="text" id="edit-family-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold block mb-1">Notas Olfativas:</label>
+                    <textarea id="edit-notes-input" rows="2" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs"></textarea>
+                </div>
+
+                <!-- Sección de Imagen -->
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2.5">
+                    <label class="text-xs font-bold text-[#0B192C] block">📸 Imagen del Perfume (Opcional)</label>
+                    
+                    <div class="flex items-center gap-2">
+                        <label class="flex-1 bg-white hover:bg-blue-50 border border-blue-200 text-blue-800 text-center py-2 px-3 rounded-xl text-xs font-bold cursor-pointer transition shadow-2xs">
+                            <span>📁 Subir desde Celular / PC</span>
+                            <input type="file" id="edit-image-file" accept="image/*" onchange="handleImageFileUpload(this)" class="hidden">
+                        </label>
+                        <button type="button" onclick="clearProductImage()" id="btn-clear-image" class="hidden bg-red-50 hover:bg-red-100 text-red-600 px-3 py-2 rounded-xl text-xs font-bold cursor-pointer" title="Quitar imagen">🗑️</button>
+                    </div>
+
+                    <div>
+                        <span class="text-[10px] text-slate-500 block mb-1">O pega un enlace (URL) de internet:</span>
+                        <input type="text" id="edit-image-input" oninput="updateImagePreview(this.value)" placeholder="https://ejemplo.com/perfume.jpg" class="w-full bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs">
+                    </div>
+
+                    <div id="edit-image-preview-box" class="hidden flex justify-center pt-1">
+                        <img id="edit-image-preview" src="" alt="Vista previa" class="h-24 w-24 object-cover rounded-xl border border-slate-300 shadow-xs">
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-2 pt-1">
+                    <input type="checkbox" id="edit-new-input" class="accent-blue-600 rounded">
+                    <label for="edit-new-input" class="text-xs font-semibold text-slate-700">Marcar como "Nuevo Ingreso" (Novedad)</label>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeEditModal()" class="bg-slate-200 text-xs px-4 py-2 rounded-xl font-semibold cursor-pointer">Cancelar</button>
+                <button onclick="saveProductDetails()" class="bg-[#0B192C] text-white text-xs px-4 py-2 rounded-xl font-bold cursor-pointer">Guardar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const INITIAL_PRODUCTS = [
+            // FEMENINOS (63)
+            { id: 1, name: "212 Héroes", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: frambuesa, mandarina. Corazón: flor de azahar, jazmín. Fondo: cedro, sándalo.", image: "", isNew: false },
+            { id: 2, name: "212 New York (clásico)", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Almizcle Floral Amaderado", notes: "Salida: flor de azahar, flor de cactus, bergamota. Corazón: camelia, azucena, gardenia. Fondo: sándalo, almizcle.", image: "", isNew: false },
+            { id: 3, name: "212 Sexy", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: pimienta rosa, mandarina, bergamota. Corazón: algodón de azúcar, gardenia, flores. Fondo: vainilla, almizcle, sándalo.", image: "", isNew: false },
+            { id: 4, name: "212 Vip", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Oriental Vainilla", notes: "Salida: ron, maracuyá. Corazón: gardenia, almizcle. Fondo: vainilla, haba tonka.", image: "", isNew: false },
+            { id: 5, name: "212 Vip Rosé", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: champaña rosada, pimienta rosa. Corazón: flor de durazno, rosa. Fondo: almizcle blanco, notas amaderadas.", image: "", isNew: false },
+            { id: 6, name: "Acqua Di Gio", designer: "Giorgio Armani", category: "Femeninos", stock: 10, family: "Floral Acuática", notes: "Salida: peonía, vodka con almizcle, piña, limón. Corazón: lirio de los valles, azucena, jazmín. Fondo: sándalo, cedro, almizcle.", image: "", isNew: false },
+            { id: 7, name: "Alien", designer: "Thierry Mugler", category: "Femeninos", stock: 10, family: "Oriental Amaderada", notes: "Salida: jazmín sambac. Corazón: madera de cachemira. Fondo: ámbar blanco.", image: "", isNew: false },
+            { id: 8, name: "Amor Amor", designer: "Cacharel", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: grosellas negras, naranja, mandarina, toronja. Corazón: rosa, chabacano, jazmín. Fondo: vainilla, haba tonka, almizcle.", image: "", isNew: false },
+            { id: 9, name: "Ange ou Demon", designer: "Givenchy", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: azafrán, tomillo, mandarina. Corazón: azucena, orquídea, ylang-ylang. Fondo: vainilla, haba tonka, palo de rosa.", image: "", isNew: false },
+            { id: 10, name: "Angel", designer: "Thierry Mugler", category: "Femeninos", stock: 10, family: "Oriental Vainilla", notes: "Salida: algodón de azúcar, coco, casis, melón. Corazón: miel, bayas rojas, zarzamora, ciruela. Fondo: pachuli, chocolate, caramelo, vainilla.", image: "", isNew: false },
+            { id: 11, name: "Angel Fantasm", designer: "Thierry Mugler", category: "Femeninos", stock: 10, family: "Oriental Vainilla Frutal", notes: "Salida: piña, bergamota. Corazón: coco, flor de tiaré. Fondo: pachuli, vainilla Bourbon, ámbar.", image: "", isNew: false },
+            { id: 12, name: "Angel Nova", designer: "Thierry Mugler", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: frambuesa, lichi. Corazón: rosa de Damasco. Fondo: akigalawood, benjuí.", image: "", isNew: false },
+            { id: 13, name: "Armani Code", designer: "Armani", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: naranja italiana, jazmín, naranja amarga. Corazón: flor de azahar, jazmín, jengibre. Fondo: miel, vainilla, sándalo.", image: "", isNew: false },
+            { id: 14, name: "Be Delicious", designer: "DKNY", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: pepino, toronja, magnolia. Corazón: manzana verde, lirio de los valles, nardos. Fondo: notas amaderadas, sándalo, ámbar.", image: "", isNew: false },
+            { id: 15, name: "Black Opium", designer: "Yves Saint Laurent", category: "Femeninos", stock: 10, family: "Oriental Vainilla", notes: "Salida: pera, pimienta rosa, flor de azahar. Corazón: café, jazmín, almendra amarga, regaliz. Fondo: vainilla, pachuli, cedro.", image: "", isNew: false },
+            { id: 16, name: "Black XS", designer: "Paco Rabanne", category: "Femeninos", stock: 10, family: "Almizcle Floral Amaderado", notes: "Salida: arándano, pimienta rosa, tamarindo. Corazón: cacao, rosa, violeta negra. Fondo: vainilla negra, pachuli, madera de massoia.", image: "", isNew: false },
+            { id: 17, name: "Bombshell Night", designer: "Victoria's Secret", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: grosellas negras, pera, cítricos. Corazón: dalia, peonía, jazmín. Fondo: notas amaderadas, almizcle.", image: "", isNew: false },
+            { id: 18, name: "Bonbon", designer: "Viktor & Rolf", category: "Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: durazno, mandarina, naranja. Corazón: caramelo, flor de azahar, jazmín. Fondo: ámbar, sándalo, madera de guaiac, cedro.", image: "", isNew: false },
+            { id: 19, name: "Burberry Her", designer: "Burberry", category: "Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: fresa, frambuesa, zarzamora, cereza ácida. Corazón: violeta, jazmín. Fondo: almizcle, vainilla, cachemira, ámbar.", image: "", isNew: false },
+            { id: 20, name: "CH", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: frutas tropicales, bergamota, toronja, limón. Corazón: praliné, canela, flor de azahar, jazmín. Fondo: gamuza, pachuli, madera de cachemira.", image: "", isNew: false },
+            { id: 21, name: "Chanel N°5", designer: "Chanel", category: "Femeninos", stock: 10, family: "Floral Aldehídica", notes: "Salida: aldehídos, ylang-ylang, neroli, bergamota. Corazón: iris, jazmín, rosa, lirio de los valles. Fondo: algalia, almizcle, sándalo, musgo de roble.", image: "", isNew: false },
+            { id: 22, name: "Cher Dieciocho", designer: "Cher", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: bergamota, cassis, naranja. Corazón: jazmín, flor de azahar, rosa. Fondo: vainilla, caramelo, pachuli, almizcle.", image: "", isNew: false },
+            { id: 23, name: "Cloud", designer: "Ariana Grande", category: "Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: lavanda, pera, bergamota. Corazón: crema batida, praliné, coco, orquídea de vainilla. Fondo: almizcle, notas amaderadas.", image: "", isNew: false },
+            { id: 24, name: "Cool Water", designer: "Davidoff", category: "Femeninos", stock: 10, family: "Floral Acuática", notes: "Salida: melón, flor de loto, limón, piña, membrillo. Corazón: flor de loto, nenúfar, lirio de los valles, jazmín. Fondo: almizcle, vetiver, frambuesa, durazno.", image: "", isNew: false },
+            { id: 25, name: "Eternity", designer: "Calvin Klein", category: "Femeninos", stock: 10, family: "Floral", notes: "Salida: notas verdes, fresia, salvia, cítricos, mandarina. Corazón: clavel, azucena, lirio de los valles, narciso, rosa. Fondo: almizcle, heliotropo, sándalo, ámbar.", image: "", isNew: false },
+            { id: 26, name: "Euphoria", designer: "Calvin Klein", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: granada, caqui, acordes verdes. Corazón: orquídea negra, flor de loto, champaca. Fondo: caoba, ámbar, violeta negra, crema batida.", image: "", isNew: false },
+            { id: 27, name: "Fame", designer: "Paco Rabanne", category: "Femeninos", stock: 10, family: "Almizcle Floral Amaderado", notes: "Salida: mango, bergamota. Corazón: jazmín, incienso de olíbano. Fondo: vainilla, sándalo.", image: "", isNew: false },
+            { id: 28, name: "Fame in Love", designer: "Paco Rabanne", category: "Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: fresa silvestre, mango. Corazón: jazmín, iris. Fondo: vainilla, incienso, sándalo.", image: "", isNew: false },
+            { id: 29, name: "Flower", designer: "Kenzo", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: rosa de Bulgaria, espino blanco, grosellas negras. Corazón: violeta de Parma, rosa, opopónaco, jazmín. Fondo: vainilla, almizcle blanco, incienso.", image: "", isNew: false },
+            { id: 30, name: "Good Girl", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: almendra, café, bergamota, limón. Corazón: nardos, jazmín sambac, flor de azahar. Fondo: haba tonka, cacao, vainilla, praliné.", image: "", isNew: true },
+            { id: 31, name: "Good Girl Blush", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Chipre Floral", notes: "Salida: bergamota, almendra amarga. Corazón: peonía, ylang-ylang. Fondo: vainilla, cumarina.", image: "", isNew: false },
+            { id: 32, name: "Good Girl Supreme", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: frutas del bosque, jazmín egipcio. Corazón: haba tonka, nardos. Fondo: vetiver.", image: "", isNew: false },
+            { id: 33, name: "Good Girl Very", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: lichi, grosella roja. Corazón: rosa. Fondo: vainilla, vetiver.", image: "", isNew: false },
+            { id: 34, name: "Goddess", designer: "Burberry", category: "Femeninos", stock: 10, family: "Aromática Vainilla", notes: "Salida: infusión de vainilla, lavanda, cacao, jengibre. Corazón: caviar de vainilla. Fondo: absoluto de vainilla.", image: "", isNew: false },
+            { id: 35, name: "Halloween", designer: "J. del Pozo", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: violeta, notas marinas, hoja de plátano, petit grain. Corazón: violeta, magnolia, lirio de los valles, nardos. Fondo: incienso, sándalo, vainilla, mirra.", image: "", isNew: false },
+            { id: 36, name: "Jadore", designer: "Christian Dior", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: pera, melón, magnolia, durazno, mandarina. Corazón: jazmín, lirio de los valles, nardos, fresia, rosa. Fondo: almizcle, vainilla, zarzamora, cedro.", image: "", isNew: false },
+            { id: 37, name: "L'Eau D'Issey", designer: "Issey Miyake", category: "Femeninos", stock: 10, family: "Floral Acuática", notes: "Salida: flor de loto, melón, fresia, agua de rosas, calone. Corazón: lirio de los valles, azucena, peonía de agua. Fondo: almizcle, maderas exóticas, nardos, sándalo.", image: "", isNew: false },
+            { id: 38, name: "L'Interdit", designer: "Givenchy", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: pera, bergamota. Corazón: nardos, flor de azahar, jazmín sambac. Fondo: pachuli, vainilla, ambroxan, vetiver.", image: "", isNew: false },
+            { id: 39, name: "La Bomba", designer: "Carolina Herrera", category: "Femeninos", stock: 10, family: "Oriental Floral Frutal", notes: "Salida: pitahaya roja, maracuyá. Corazón: peonía cereza, frangipani. Fondo: vainilla solar, pachuli.", image: "", isNew: false },
+            { id: 40, name: "La Vida es Bella", designer: "Lancome", category: "Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: grosellas negras, pera. Corazón: iris, jazmín, flor de azahar. Fondo: praliné, vainilla, pachuli, haba tonka.", image: "", isNew: false },
+            { id: 41, name: "La Vida es Bella Elixir", designer: "Lancome", category: "Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: frambuesa, licor, bergamota. Corazón: hojas de violeta, rosa. Fondo: cuero, manteca de cacao, cedro.", image: "", isNew: false },
+            { id: 42, name: "Lady Million", designer: "Paco Rabanne", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: frambuesa, neroli, limón de Amalfi. Corazón: jazmín, flor del naranjo africano, gardenia. Fondo: miel blanca, pachuli, ámbar.", image: "", isNew: false },
+            { id: 43, name: "Libre", designer: "Yves Saint Laurent", category: "Femeninos", stock: 10, family: "Oriental Fougère", notes: "Salida: lavanda, mandarina, grosellas negras, petit grain. Corazón: lavanda, flor de azahar, jazmín. Fondo: vainilla de Madagascar, almizcle, cedro, ámbar gris.", image: "", isNew: true },
+            { id: 44, name: "Libre Berry Crush", designer: "Yves Saint Laurent", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: frutos rojos, mandarina, lavanda. Corazón: flor de azahar, jazmín. Fondo: vainilla, almizcle.", image: "", isNew: false },
+            { id: 45, name: "Light Blue", designer: "Dolce & Gabanna", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: limón siciliano, manzana, cedro, campanilla. Corazón: bambú, jazmín, rosa blanca. Fondo: cedro, almizcle, ámbar.", image: "", isNew: false },
+            { id: 46, name: "Miss Dior", designer: "Christian Dior", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: iris, peonía, lirio de los valles. Corazón: chabacano, rosa, durazno. Fondo: vainilla, almizcle, haba tonka, benjuí, sándalo.", image: "", isNew: false },
+            { id: 47, name: "My Way", designer: "Armani", category: "Femeninos", stock: 10, family: "Floral", notes: "Salida: flor de azahar, bergamota. Corazón: nardos, jazmín de la India. Fondo: vainilla de Madagascar, almizcle blanco, cedro de Virginia.", image: "", isNew: false },
+            { id: 48, name: "Olympea", designer: "Paco Rabanne", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: jazmín de agua, mandarina verde, flor de jengibre. Corazón: vainilla, sal. Fondo: ámbar gris, madera de cachemira, sándalo.", image: "", isNew: false },
+            { id: 49, name: "Power of You", designer: "Giorgio Armani", category: "Femeninos", stock: 10, family: "Oriental Floral Gourmand", notes: "Salida: maracuyá, cítricos. Corazón: frangipani, flores blancas. Fondo: vainilla de Madagascar, benjuí.", image: "", isNew: false },
+            { id: 50, name: "Pure XS", designer: "Paco Rabanne", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: ylang-ylang, vainilla, palomitas de maíz, almizcle ambreta. Corazón: sándalo, flor de azahar. Fondo: durazno, ámbar, almizcle blanco, coco.", image: "", isNew: false },
+            { id: 51, name: "Ralph", designer: "Ralph Laurent", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: hojas de manzano, mandarina italiana, osmanto japonés. Corazón: fresia amarilla, magnolia, boronia parda. Fondo: almizcle, iris blanco.", image: "", isNew: false },
+            { id: 52, name: "Scandal", designer: "J.P. Gaultier", category: "Femeninos", stock: 10, family: "Chipre Floral", notes: "Salida: naranja sanguina, mandarina. Corazón: miel, gardenia, flor de azahar, jazmín, durazno. Fondo: cera de abeja, caramelo, pachuli, regaliz.", image: "", isNew: false },
+            { id: 53, name: "Shakira Elixir", designer: "Shakira", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: pimienta negra, flor de azahar. Corazón: durazno, fresia, peonía. Fondo: ámbar, benjuí, azúcar moreno, almizcle, cedro.", image: "", isNew: false },
+            { id: 54, name: "Shakira Rock", designer: "Shakira", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: maracuyá, bergamota, limón verde, mandarina verde. Corazón: jazmín, flor de azahar, flor de tiaré. Fondo: almizcle, pachuli, cedro, ámbar.", image: "", isNew: false },
+            { id: 55, name: "Si", designer: "Armani", category: "Femeninos", stock: 10, family: "Chipre Frutal", notes: "Salida: casis (grosellero negro). Corazón: rosa de mayo, fresia. Fondo: vainilla, pachuli, ambroxan, notas amaderadas.", image: "", isNew: false },
+            { id: 56, name: "Sweet Like Candy", designer: "Ariana Grande", category: "Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: zarzamora, pera, bergamota. Corazón: crema batida, malvavisco, grosellas negras, frangipani. Fondo: vainilla, madera de cachemira.", image: "", isNew: false },
+            { id: 57, name: "The Only One", designer: "Dolce & Gabanna", category: "Femeninos", stock: 10, family: "Oriental Vainilla", notes: "Salida: violeta, naranja, bergamota. Corazón: café, pera, iris, flor de azahar, rosa. Fondo: caramelo, vainilla, pachuli.", image: "", isNew: false },
+            { id: 58, name: "Tommy Girl", designer: "Tommy Hilfiger", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: manzano en flor, camelia, mandarina, grosellas negras. Corazón: limón, madreselva, rosa, toronja, azucena, menta. Fondo: magnolia, jazmín, cedro, sándalo, cuero.", image: "", isNew: false },
+            { id: 59, name: "Toy 2", designer: "Moschino", category: "Femeninos", stock: 10, family: "Almizcle Floral Amaderado", notes: "Salida: manzana, mandarina, magnolia. Corazón: grosella blanca, peonía, jazmín. Fondo: almizcle, sándalo, madera de amberwood.", image: "", isNew: false },
+            { id: 60, name: "Toy 2 Bubble Gum", designer: "Moschino", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: frutas confitadas, naranja amarga, limón. Corazón: goma de mascar, rosa de Bulgaria, moras azules, durazno, canela. Fondo: almizcle, ambroxan, cedro.", image: "", isNew: false },
+            { id: 61, name: "Valentino Donna", designer: "Valentino", category: "Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: bergamota. Corazón: iris, rosa de Bulgaria. Fondo: cuero, vainilla, pachuli.", image: "", isNew: false },
+            { id: 62, name: "Valentino Melancholia", designer: "Valentino", category: "Femeninos", stock: 10, family: "Floral Amaderada", notes: "Salida: grosella negra, bergamota. Corazón: jazmín sambac, flores blancas. Fondo: vainilla Bourbon, maderas.", image: "", isNew: false },
+            { id: 63, name: "Very Irresistible", designer: "Givenchy", category: "Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: casis, cedrón, anís estrellado. Corazón: rosa, peonía, magnolia. Fondo: rosa de Taif.", image: "", isNew: false },
+
+            // MASCULINOS (75)
+            { id: 64, name: "212 Heroes", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Aromática Frutal", notes: "Salida: pera, cannabis, jengibre. Corazón: geranio, salvia. Fondo: almizcle, cuero.", image: "", isNew: false },
+            { id: 65, name: "212 New York (clásico)", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Almizcle Amaderado Floral", notes: "Salida: notas verdes, toronja, especias, bergamota, lavanda. Corazón: jengibre, violeta, gardenia, salvia. Fondo: almizcle, sándalo, incienso, vetiver, madera de guaiac.", image: "", isNew: false },
+            { id: 66, name: "212 Sexy", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Oriental Fougère", notes: "Salida: mandarina, bergamota, notas verdes. Corazón: pimienta, flores, cardamomo. Fondo: vainilla, madera de guaiac, sándalo, almizcle, ámbar.", image: "", isNew: false },
+            { id: 67, name: "212 Vip", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Salida: maracuyá, lima, pimienta, jengibre. Corazón: vodka, ginebra, menta, especias. Fondo: ámbar, cuero, notas amaderadas.", image: "", isNew: false },
+            { id: 68, name: "212 Vip Black", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: absenta, anís, hinojo. Corazón: lavanda. Fondo: vaina de vainilla negra, almizcle.", image: "", isNew: false },
+            { id: 69, name: "Althair", designer: "Parfums de Marly", category: "Masculinos", stock: 10, family: "Oriental Vainilla", notes: "Salida: canela, cardamomo, flor de azahar, bergamota. Corazón: vainilla Bourbon, elemí. Fondo: praliné, almizcle, ambroxan, madera de guaiac.", image: "", isNew: false },
+            { id: 70, name: "A Men", designer: "Thierry Mugler", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Salida: lavanda, menta, notas afrutadas, cilantro, bergamota. Corazón: caramelo, pachuli, miel, leche, cedro, jazmín. Fondo: café, pachuli, vainilla, haba tonka, benjuí, ámbar.", image: "", isNew: false },
+            { id: 71, name: "Acqua Di Gio", designer: "Giorgio Armani", category: "Masculinos", stock: 10, family: "Aromática Acuática", notes: "Salida: lima, limón, bergamota, jazmín, naranja, mandarina. Corazón: notas marinas, jazmín, calone, durazno, fresia, romero. Fondo: almizcle blanco, cedro, musgo de roble, pachuli, ámbar.", image: "", isNew: false },
+            { id: 72, name: "Acqua Di Gio Profondo", designer: "Giorgio Armani", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: notas marinas, aquozone, bergamota, mandarina verde. Corazón: romero, ciprés, lavanda, lentisco. Fondo: notas minerales, almizcle, pachuli, ámbar.", image: "", isNew: false },
+            { id: 73, name: "Acqua Di Gio Profumo", designer: "Giorgio Armani", category: "Masculinos", stock: 10, family: "Aromática Acuática", notes: "Salida: notas marinas, bergamota. Corazón: romero, salvia, geranio. Fondo: incienso, pachuli.", image: "", isNew: false },
+            { id: 74, name: "Armani Code", designer: "Giorgio Armani", category: "Masculinos", stock: 10, family: "Oriental Especiada", notes: "Salida: limón, bergamota. Corazón: anís estrellado, flor del olivo, madera de guaiac. Fondo: cuero, haba tonka, tabaco.", image: "", isNew: false },
+            { id: 75, name: "Bad Boy", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Oriental Especiada", notes: "Salida: pimienta blanca, bergamota, pimienta rosa. Corazón: cedro, esclarea. Fondo: haba tonka, cacao.", image: "", isNew: false },
+            { id: 76, name: "Bad Boy Dazzling Garden", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Oriental Especiada", notes: "Salida: pimienta blanca, toronja. Corazón: esclarea, vetiver. Fondo: cacao, haba tonka.", image: "", isNew: false },
+            { id: 77, name: "Black Xs", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Salida: limón, salvia. Corazón: praliné, canela, bálsamo de Tolú, cardamomo negro. Fondo: palo de rosa, pachuli, ámbar negro.", image: "", isNew: false },
+            { id: 78, name: "Black Xs Aphrodisiaque", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Cuero", notes: "Salida: canela, azafrán. Corazón: miel, flor de azahar, ciprés. Fondo: praliné, cuero, almendra.", image: "", isNew: false },
+            { id: 79, name: "Bleau Chanel", designer: "Chanel", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Salida: toronja, limón, menta, pimienta rosa. Corazón: jengibre, nuez moscada, jazmín, Iso E Super. Fondo: incienso, vetiver, cedro, sándalo, pachuli, ládano.", image: "", isNew: false },
+            { id: 80, name: "Bulgary Man In Black", designer: "Bulgary", category: "Masculinos", stock: 10, family: "Oriental Floral", notes: "Salida: especias, ron, tabaco. Corazón: cuero, iris, nardos. Fondo: haba tonka, madera de guaiac, benjuí.", image: "", isNew: false },
+            { id: 81, name: "CH", designer: "Carolina Herrera", category: "Masculinos", stock: 10, family: "Oriental Especiada", notes: "Salida: hierba, bergamota, toronja. Corazón: notas amaderadas, nuez moscada, violeta, azafrán, jazmín. Fondo: azúcar, cuero, vainilla, gamuza, ámbar, madera de cachemira.", image: "", isNew: false },
+            { id: 82, name: "Creed Aventus", designer: "Creed", category: "Masculinos", stock: 10, family: "Chipre Frutal", notes: "Salida: piña, bergamota, grosellas negras, manzana. Corazón: abedul, pachuli, jazmín de Marruecos, rosa. Fondo: almizcle, musgo de roble, ámbar gris, vainilla.", image: "", isNew: false },
+            { id: 83, name: "Devotion Homme", designer: "Dolce Gabanna", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: limón. Corazón: café. Fondo: pachuli.", image: "", isNew: false },
+            { id: 84, name: "Dior Homme", designer: "Christian Dior", category: "Masculinos", stock: 10, family: "Amaderada", notes: "Salida: bergamota, pimienta rosa, elemí. Corazón: cedro del Atlas, madera de cachemira, pachuli. Fondo: Iso E Super, vetiver de Haití, almizcle blanco.", image: "", isNew: false },
+            { id: 85, name: "Eros", designer: "Versace", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: menta, manzana verde, limón. Corazón: haba tonka, ambroxan, geranio. Fondo: vainilla de Madagascar, cedro de Virginia, cedro del Atlas, vetiver, musgo de roble.", image: "", isNew: false },
+            { id: 86, name: "Eros Flame", designer: "Versace", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: mandarina, pimienta negra, limón, chinotto, romero. Corazón: pimienta, geranio, rosa. Fondo: vainilla, haba tonka, sándalo, cedro de Texas, pachuli, musgo de roble.", image: "", isNew: false },
+            { id: 87, name: "Fahrenheit", designer: "Christian Dior", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: flor del moscadero, lavanda, cedro, manzanilla, mandarina, espino blanco, bergamota. Corazón: hojas de violeta, nuez moscada, cedro, sándalo, madreselva, clavel. Fondo: cuero, vetiver, almizcle, ámbar, pachuli, haba tonka.", image: "", isNew: false },
+            { id: 88, name: "Hugo", designer: "Hugo Boss", category: "Masculinos", stock: 10, family: "Aromática Verde", notes: "Salida: manzana verde, menta, lavanda, toronja, albahaca. Corazón: salvia, geranio, clavel, jazmín. Fondo: abeto, cedro, pachuli.", image: "", isNew: false },
+            { id: 89, name: "Imagination", designer: "Louis Vuitton", category: "Masculinos", stock: 10, family: "Cítrica Aromática", notes: "Salida: cidra, bergamota de Calabria, naranja siciliana. Corazón: neroli de Túnez, jengibre nigeriano, canela de Ceilán. Fondo: té negro de China, ambroxan, madera de guaiac, incienso de olíbano.", image: "", isNew: false },
+            { id: 90, name: "Invictus", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Amaderada Acuática", notes: "Salida: notas marinas, toronja, mandarina. Corazón: hoja de laurel, jazmín. Fondo: ámbar gris, madera de guaiac, musgo de roble, pachuli.", image: "", isNew: false },
+            { id: 91, name: "Invictus Acqua", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Amaderada Acuática", notes: "Salida: yuzu, toronja, pimienta rosa. Corazón: agua de mar, hojas de violeta. Fondo: ámbar gris, madera de amberwood, madera de guaiac.", image: "", isNew: false },
+            { id: 92, name: "Invictus Elixir", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Salida: lavanda, cardamomo, pimienta negra. Corazón: incienso, pachuli. Fondo: vaina de vainilla, haba tonka.", image: "", isNew: false },
+            { id: 93, name: "Invictus Legend", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Salida: notas marinas, sal de mar, toronja. Corazón: hoja de laurel, geranio, especias. Fondo: ámbar rojo, madera de guaiac.", image: "", isNew: false },
+            { id: 94, name: "Invictus Platinum", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Salida: absenta, toronja. Corazón: menta, lavanda. Fondo: ciprés, pachuli.", image: "", isNew: false },
+            { id: 95, name: "Invictus Victory Elixir", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Salida: lavanda, cardamomo verde, pimienta negra. Corazón: incienso, pachuli. Fondo: vaina de vainilla, haba tonka.", image: "", isNew: false },
+            { id: 96, name: "Kenzo Homme", designer: "Kenzo", category: "Masculinos", stock: 10, family: "Aromática Acuática", notes: "Salida: notas marinas, caoba, salvia, bergamota, limón. Corazón: pino, bayas de enebro, clavel, nuez moscada, rosa, lirio de los valles. Fondo: abeto balsámico, sándalo, cedro, musgo de roble, vetiver, almizcle.", image: "", isNew: false },
+            { id: 97, name: "King of Seduction", designer: "Antonio Banderas", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Salida: piña, bergamota, melón, manzana verde, toronja. Corazón: notas marinas, jazmín, cardamomo, neroli. Fondo: vetiver, cedro, almizcle blanco, gamuza, ámbar.", image: "", isNew: false },
+            { id: 98, name: "Issey masculino", designer: "Issey Miyake", category: "Masculinos", stock: 10, family: "Amaderada Acuática", notes: "Salida: yuzu, limón, bergamota, cedrón, mandarina, ciprés, calone, cilantro. Corazón: flor de loto azul, nuez moscada, lirio de los valles, azafrán, geranio, canela. Fondo: vetiver de Tahití, almizcle, cedro, sándalo, tabaco, ámbar.", image: "", isNew: false },
+            { id: 99, name: "Le Beau", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Salida: bergamota. Corazón: coco. Fondo: haba tonka.", image: "", isNew: false },
+            { id: 100, name: "Le Male", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Oriental Fougère", notes: "Salida: lavanda, menta, cardamomo, bergamota, abrótano. Corazón: canela, flor de azahar, alcaravea. Fondo: vainilla, haba tonka, ámbar, sándalo, cedro.", image: "", isNew: false },
+            { id: 101, name: "Le Male Elixir", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Oriental Fougère", notes: "Salida: lavanda, menta. Corazón: vainilla, benjuí. Fondo: miel, haba tonka, tabaco.", image: "", isNew: false },
+            { id: 102, name: "Le Male Elixir Absolut", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Oriental Amaderada Especiada", notes: "Salida: ciruela, canela, cardamomo, bergamota. Corazón: lavanda, abrótano. Fondo: haba tonka, benjuí, ambreta, pachuli.", image: "", isNew: false },
+            { id: 103, name: "Le Male Parfum", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Oriental", notes: "Salida: cardamomo. Corazón: lavanda, iris. Fondo: vainilla, notas orientales, notas amaderadas.", image: "", isNew: false },
+            { id: 104, name: "Light Blue", designer: "Dolce & Gabbana", category: "Masculinos", stock: 10, family: "Cítrica Aromática", notes: "Salida: toronja, bergamota, mandarina siciliana, enebro de Virginia. Corazón: pimienta, romero, palo de rosa. Fondo: almizcle, incienso, musgo de roble.", image: "", isNew: false },
+            { id: 105, name: "MYSLF", designer: "Yves Saint Laurent", category: "Masculinos", stock: 10, family: "Amaderada Floral Almizclada", notes: "Salida: bergamota de Calabria, bergamota. Corazón: flor del naranjo tunecino. Fondo: ambrofix, pachuli.", image: "", isNew: false },
+            { id: 106, name: "Myslf Absolut", designer: "Yves Saint Laurent", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Salida: jengibre, cardamomo, bergamota. Corazón: flor de azahar, notas florales. Fondo: pachuli.", image: "", isNew: false },
+            { id: 107, name: "Ombre Leather", designer: "Tom Ford", category: "Masculinos", stock: 10, family: "Cuero", notes: "Salida: cardamomo. Corazón: cuero, jazmín sambac. Fondo: ámbar, musgo, pachuli.", image: "", isNew: false },
+            { id: 108, name: "Ombre Nomade", designer: "Louis Vuitton", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Notas principales: madera de oud, incienso, rosa, frambuesa, abedul, azafrán, benjuí, amberwood, geranio.", image: "", isNew: false },
+            { id: 109, name: "One Million", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: mandarina roja, toronja, menta. Corazón: canela, notas especiadas, rosa. Fondo: ámbar, cuero, notas amaderadas, pachuli indio.", image: "", isNew: false },
+            { id: 110, name: "One Million Elixir", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Salida: manzana, davana. Corazón: rosa de Damasco, cedro, osmanto. Fondo: absoluto de vainilla, haba tonka, pachuli.", image: "", isNew: false },
+            { id: 111, name: "One Million Lucky", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Amaderada", notes: "Salida: ciruela, notas ozónicas, toronja, bergamota. Corazón: avellana, miel, cedro, madera de cachemira, jazmín, flor de azahar. Fondo: amberwood, pachuli, musgo de roble, vetiver.", image: "", isNew: false },
+            { id: 112, name: "Paradise Garden", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Amaderada Acuática Verde", notes: "Salida: notas verdes, notas acuosas, menta, jengibre. Corazón: coco, higo, sal. Fondo: haba tonka, sándalo.", image: "", isNew: false },
+            { id: 113, name: "Phantom", designer: "Paco Rabanne", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Salida: lavanda, cáscara de limón, limón de Amalfi. Corazón: lavanda, humo, manzana, notas terrosas, pachuli. Fondo: vainilla, lavanda, vetiver.", image: "", isNew: false },
+            { id: 114, name: "Polo Black", designer: "Ralph Lauren", category: "Masculinos", stock: 10, family: "Amaderada Aromática", notes: "Notas principales: mango, sándalo, naranja tangerina, pachuli, salvia, limón, haba tonka, abrótano.", image: "", isNew: false },
+            { id: 115, name: "Polo Blue", designer: "Ralph Lauren", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: pepino, melón, mandarina. Corazón: albahaca, salvia, geranio. Fondo: gamuza, notas amaderadas, almizcle.", image: "", isNew: false },
+            { id: 116, name: "Polo Red", designer: "Ralph Lauren", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: arándano, toronja, limón italiano. Corazón: azafrán, salvia. Fondo: ámbar, café, notas amaderadas.", image: "", isNew: false },
+            { id: 117, name: "Power of Seduction", designer: "Antonio Banderas", category: "Masculinos", stock: 10, family: "Aromática", notes: "Salida: manzana, bergamota. Corazón: lavanda, esclarea, abrótano. Fondo: notas amaderadas, musgo, haba tonka, ámbar, pachuli.", image: "", isNew: false },
+            { id: 118, name: "Sauvage", designer: "Christian Dior", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: bergamota de Calabria, pimienta. Corazón: pimienta de Sichuan, lavanda, pimienta rosa, vetiver, pachuli, geranio. Fondo: ambroxan, cedro, ládano.", image: "", isNew: true },
+            { id: 119, name: "Sauvage Elixir", designer: "Christian Dior", category: "Masculinos", stock: 10, family: "Aromática", notes: "Salida: nuez moscada, canela, cardamomo, toronja. Corazón: lavanda. Fondo: regaliz, sándalo, ámbar, pachuli de Haití, vetiver.", image: "", isNew: false },
+            { id: 120, name: "Scandal", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Oriental Amaderada", notes: "Salida: mandarina, esclarea. Corazón: caramelo, haba tonka. Fondo: vetiver.", image: "", isNew: false },
+            { id: 121, name: "Spicebomb", designer: "Viktor & Rolf", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: pimienta rosa, elemí, bergamota, toronja. Corazón: canela, azafrán, pimentón dulce. Fondo: tabaco, cuero, vetiver.", image: "", isNew: false },
+            { id: 122, name: "Stronger Sandalwood", designer: "Giorgio Armani", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: azafrán, castaña. Corazón: lavanda, salvia. Fondo: sándalo, vainilla, cedro.", image: "", isNew: false },
+            { id: 123, name: "Stronger With You", designer: "Giorgio Armani", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: cardamomo, pimienta rosa, hojas de violeta, menta. Corazón: piña, canela, melón, salvia, lavanda. Fondo: vainilla, castaña, amberwood, cedro, madera de guaiac.", image: "", isNew: false },
+            { id: 124, name: "Stronger With You Intensely", designer: "Giorgio Armani", category: "Masculinos", stock: 10, family: "Oriental Fougère", notes: "Salida: pimienta rosa, enebro de Virginia, violeta. Corazón: tófi, canela, lavanda, salvia. Fondo: vainilla, ámbar, haba tonka, gamuza.", image: "", isNew: false },
+            { id: 125, name: "The Most Wanted", designer: "Azzaro", category: "Masculinos", stock: 10, family: "Oriental Especiada", notes: "Salida: cardamomo. Corazón: tófi. Fondo: amberwood.", image: "", isNew: false },
+            { id: 126, name: "The Most Wanted Intense", designer: "Azzaro", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: bergamota. Corazón: lavanda. Fondo: musgo, notas amaderadas, licor.", image: "", isNew: false },
+            { id: 127, name: "The One D&G", designer: "Dolce & Gabbana", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: toronja, cilantro, albahaca. Corazón: cardamomo, jengibre, flor de azahar. Fondo: ámbar, tabaco, cedro.", image: "", isNew: false },
+            { id: 128, name: "Tobacco Vainilla", designer: "Tom Ford", category: "Masculinos", stock: 10, family: "Oriental Especiada", notes: "Salida: hojas de tabaco, notas especiadas. Corazón: vainilla, cacao, haba tonka, flor del tabaco. Fondo: frutos secos, notas amaderadas.", image: "", isNew: false },
+            { id: 129, name: "Tommy Hilfiger", designer: "Tommy Hilfiger", category: "Masculinos", stock: 10, family: "Cítrica Aromática", notes: "Salida: menta, bergamota, toronja, lavanda. Corazón: manzana Granny Smith, arándano, rosa. Fondo: flor del algodonero, cactus, ámbar.", image: "", isNew: false },
+            { id: 130, name: "Toy Boy", designer: "Moschino", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: pimienta rosa, pera, nuez moscada, elemí, bergamota. Corazón: rosa, clavo de olor, magnolia, lino. Fondo: cachemira, vetiver de Haití, sándalo, ámbar, sylkolide.", image: "", isNew: false },
+            { id: 131, name: "Ultra Male", designer: "J.P. Gaultier", category: "Masculinos", stock: 10, family: "Oriental Fougère", notes: "Salida: pera, lavanda, menta, bergamota, limón. Corazón: canela, esclarea, alcaravea. Fondo: vaina de vainilla negra, ámbar, pachuli, cedro.", image: "", isNew: false },
+            { id: 132, name: "Valentino", designer: "Valentino", category: "Masculinos", stock: 10, family: "Cuero", notes: "Salida: bergamota, mirto. Corazón: avellana, chocolate, granos de café tostado. Fondo: cuero, cedro.", image: "", isNew: false },
+            { id: 133, name: "Valentino Extradose", designer: "Valentino", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: notas especiadas, bergamota. Corazón: lavanda, salvia. Fondo: vetiver, notas amaderadas.", image: "", isNew: false },
+            { id: 134, name: "Valentino Intense", designer: "Valentino", category: "Masculinos", stock: 10, family: "Cuero", notes: "Salida: mandarina, esclarea. Corazón: iris, haba tonka. Fondo: vainilla, cuero.", image: "", isNew: false },
+            { id: 135, name: "Valentino Green Extravaganza", designer: "Valentino", category: "Masculinos", stock: 10, family: "Oriental Fougère", notes: "Salida: bergamota de Calabria. Corazón: café. Fondo: vetiver.", image: "", isNew: false },
+            { id: 136, name: "Wanted", designer: "Azzaro", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: limón, jengibre, lavanda, menta. Corazón: manzana, enebro de Virginia, cardamomo guatemalteco, geranio. Fondo: haba tonka, amberwood, vetiver de Haití.", image: "", isNew: false },
+            { id: 137, name: "Y Eau de Parfum", designer: "Yves Saint Laurent", category: "Masculinos", stock: 10, family: "Aromática Fougère", notes: "Salida: manzana, jengibre, bergamota. Corazón: salvia, bayas de enebro, geranio. Fondo: amberwood, haba tonka, cedro, vetiver, incienso.", image: "", isNew: false },
+            { id: 138, name: "Y Elixir", designer: "Yves Saint Laurent", category: "Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: lavanda. Corazón: geranio. Fondo: incienso de olíbano, madera de oud.", image: "", isNew: false },
+
+            // UNISEX (4)
+            { id: 139, name: "Baccarat Rouge 540", designer: "Maison Francis Kurkdjian", category: "Unisex", stock: 10, family: "Oriental Floral", notes: "Salida: azafrán, jazmín. Corazón: amberwood, ámbar gris. Fondo: resina de abeto, cedro.", image: "", isNew: false },
+            { id: 140, name: "CK One", designer: "Calvin Klein", category: "Unisex", stock: 10, family: "Cítrica Aromática", notes: "Salida: limón, notas verdes, bergamota, piña, mandarina, cardamomo, papaya. Corazón: lirio de los valles, jazmín, violeta, nuez moscada, rosa, raíz de lirio. Fondo: acordes verdes, almizcle, cedro, sándalo, musgo de roble, té verde.", image: "", isNew: false },
+            { id: 141, name: "Lost Cherry", designer: "Tom Ford", category: "Unisex", stock: 10, family: "Oriental Floral", notes: "Salida: almendra amarga, cereza negra, licor de cereza. Corazón: cereza ácida, ciruela, rosa turca, jazmín sambac. Fondo: haba tonka, vainilla, canela, bálsamo del Perú, benjuí, sándalo.", image: "", isNew: false },
+            { id: 142, name: "Silver Mountain Water", designer: "Creed", category: "Unisex", stock: 10, family: "Aromática", notes: "Salida: bergamota, mandarina. Corazón: té verde, grosellas negras. Fondo: almizcle, petit grain, sándalo, gálbano.", image: "", isNew: false },
+
+            // ÁRABES FEMENINOS (13)
+            { id: 143, name: "Angham Second", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Oriental Vainilla", notes: "Salida: jengibre, mandarina, pimienta rosa. Corazón: lavanda, praliné, cacao, jazmín. Fondo: vainilla, ámbar, almizcle.", image: "", isNew: false },
+            { id: 144, name: "Choco Overdose", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Oriental Vainilla Gourmand", notes: "Salida: chocolate oscuro, dulce de leche, avellana. Corazón: cacao, crema batida, caramelo. Fondo: vainilla, benjuí, almizcle.", image: "", isNew: false },
+            { id: 145, name: "Eclaire", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: caramelo, leche, azúcar. Corazón: miel, flores blancas. Fondo: vainilla, praliné, almizcle.", image: "", isNew: true },
+            { id: 146, name: "Fakar Rose", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Floral", notes: "Salida: frutas, azucena, granada, aldehídos. Corazón: nardos, jazmín, gardenia, ylang-ylang, madreselva, peonía, rosa. Fondo: vainilla, almizcle blanco, ambroxan, sándalo.", image: "", isNew: false },
+            { id: 147, name: "Marshmallow Blush", designer: "París Corner", category: "Árabes Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: fresa, frambuesa, limón. Corazón: ambroxan, flor de azahar. Fondo: malvavisco, almizcle, vainilla.", image: "", isNew: false },
+            { id: 148, name: "Mayar", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: lichi, frambuesa, hojas de violeta. Corazón: rosa blanca, peonía, jazmín. Fondo: almizcle, vainilla.", image: "", isNew: false },
+            { id: 149, name: "Quimmah", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Oriental Floral", notes: "Salida: almendra, café. Corazón: nardos, jazmín, haba tonka. Fondo: vainilla, cacao, sándalo.", image: "", isNew: false },
+            { id: 150, name: "Victoria", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: merengue de limón. Corazón: neroli. Fondo: vainilla.", image: "", isNew: false },
+            { id: 151, name: "Yara", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Oriental Vainilla", notes: "Salida: orquídea, heliotropo, naranja tangerina. Corazón: acorde gourmand, frutas tropicales. Fondo: vainilla, almizcle, sándalo.", image: "", isNew: false },
+            { id: 152, name: "Yara Candy", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Floral Frutal Gourmand", notes: "Salida: mandarina verde, grosellas negras. Corazón: caramelos de fresa efervescentes, gardenia. Fondo: sándalo, jarabe de vainilla, almizcle, ámbar.", image: "", isNew: false },
+            { id: 153, name: "Yara Elixir", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Oriental Vainilla Frutal", notes: "Salida: fresa, grosellas negras. Corazón: jazmín, flor de azahar. Fondo: vainilla, caramelo, ámbar, almizcle.", image: "", isNew: false },
+            { id: 154, name: "Yara tous", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Floral Frutal", notes: "Salida: mango, coco, maracuyá. Corazón: jazmín, heliotropo, flor de azahar. Fondo: vainilla, cachemira, almizcle.", image: "", isNew: false },
+            { id: 155, name: "Vainilla Freak", designer: "Lattafa", category: "Árabes Femeninos", stock: 10, family: "Oriental Vainilla", notes: "Salida: cupcake, azúcar. Corazón: glaseado, canela, almendra. Fondo: vainilla, crema de mantequilla, almizcle.", image: "", isNew: false },
+
+            // ÁRABES MASCULINOS (15)
+            { id: 156, name: "9 pm", designer: "Armaf", category: "Árabes Masculinos", stock: 10, family: "Oriental Vainilla", notes: "Salida: manzana, canela, lavanda silvestre, bergamota. Corazón: flor de azahar, lirio de los valles. Fondo: vainilla, haba tonka, ámbar, pachuli.", image: "", isNew: false },
+            { id: 157, name: "9PM Night Out", designer: "Armaf", category: "Árabes Masculinos", stock: 10, family: "Aromática Especiada", notes: "Salida: pitahaya, lavanda, coñac, bergamota, manzana. Corazón: cardamomo, tófi, cedro, gamuza, mahonial. Fondo: haba tonka, amberwood, pachuli, akigalawood.", image: "", isNew: false },
+            { id: 158, name: "9PM Rebeld", designer: "Armaf", category: "Árabes Masculinos", stock: 10, family: "Aromática Frutal", notes: "Salida: piña, mandarina, manzana Granny Smith. Corazón: cedro, musgo de roble, vainilla. Fondo: amberwood, caramelo, maderas secas, almizcle.", image: "", isNew: false },
+            { id: 159, name: "Asad", designer: "Lattafa", category: "Árabes Masculinos", stock: 10, family: "Oriental", notes: "Salida: pimienta negra, tabaco, piña. Corazón: pachuli, café, iris. Fondo: vainilla, ámbar, madera seca, benjuí, ládano.", image: "", isNew: false },
+            { id: 160, name: "Asad Bourbon", designer: "Lattafa", category: "Árabes Masculinos", stock: 10, family: "Oriental Especiada", notes: "Salida: lavanda, ciruela Mirabel, pimienta rosa. Corazón: cacao, davana, nuez moscada. Fondo: vainilla Bourbon, ámbar, vetiver.", image: "", isNew: false },
+            { id: 161, name: "Asad Zanzibar", designer: "Lattafa", category: "Árabes Masculinos", stock: 10, family: "Aromática Acuática", notes: "Salida: lavanda, pimienta negra. Corazón: agua de coco, iris, sal. Fondo: vainilla, incienso.", image: "", isNew: false },
+            { id: 162, name: "Bharara King", designer: "Bharara", category: "Árabes Masculinos", stock: 10, family: "Aromática", notes: "Salida: naranja, bergamota, limón. Corazón: notas afrutadas. Fondo: vainilla, almizcle blanco, ámbar.", image: "", isNew: false },
+            { id: 163, name: "Club de nuit", designer: "Armaf", category: "Árabes Masculinos", stock: 10, family: "Amaderada Especiada", notes: "Salida: limón, piña, bergamota, grosellas negras, manzana. Corazón: abedul, jazmín, rosa. Fondo: almizcle, ámbar gris, pachuli, vainilla.", image: "", isNew: false },
+            { id: 164, name: "Blue Sapphire", designer: "Lattafa", category: "Árabes Masculinos", stock: 10, family: "Aromática Acuática", notes: "Salida: menta, manzana, limón. Corazón: notas marinas, esclarea, geranio. Fondo: pachuli, cedro.", image: "", isNew: false },
+            { id: 165, name: "Hawas", designer: "Rasasi", category: "Árabes Masculinos", stock: 10, family: "Aromática Acuática", notes: "Salida: manzana, bergamota, limón, canela. Corazón: notas acuosas, ciruela, flor de azahar, cardamomo. Fondo: ámbar gris, almizcle, trozos de madera, pachuli.", image: "", isNew: false },
+            { id: 166, name: "Líquid Brun", designer: "French Avenue", category: "Árabes Masculinos", stock: 10, family: "Amaderada", notes: "Salida: canela, flor de azahar, cardamomo, bergamota. Corazón: vainilla Bourbon, elemí. Fondo: praliné, ambroxan, madera de guaiac, almizcle.", image: "", isNew: false },
+            { id: 167, name: "Fackar Black", designer: "Lattafa", category: "Árabes Masculinos", stock: 10, family: "Oriental", notes: "Salida: manzana, bergamota, jengibre. Corazón: lavanda, salvia, bayas de enebro, geranio. Fondo: haba tonka, amberwood, cedro, vetiver.", image: "", isNew: false },
+            { id: 168, name: "Mandarín sky", designer: "Armaf", category: "Árabes Masculinos", stock: 10, family: "Cítrica Aromática", notes: "Salida: mandarina, naranja, azafrán, salvia. Corazón: caramelo, haba tonka, cempasúchil. Fondo: ambroxan, vetiver, cedro.", image: "", isNew: false },
+            { id: 169, name: "Pisa", designer: "Lattafa", category: "Árabes Masculinos", stock: 10, family: "Cítrica Aromática", notes: "Salida: mandarina, limón, bergamota. Corazón: cedro. Fondo: sándalo, ámbar.", image: "", isNew: false },
+            { id: 170, name: "Suqraat", designer: "Lattafa", category: "Árabes Masculinos", stock: 10, family: "Aromática", notes: "Salida: bergamota, jengibre. Corazón: hojas de violeta, lavanda. Fondo: almizcle, sándalo, ámbar.", image: "", isNew: false },
+
+            // ÁRABES UNISEX (21)
+            { id: 171, name: "Accento Overdose", designer: "Xerjoff", category: "Árabes Unisex", stock: 10, family: "Floral Frutal", notes: "Salida: notas afrutadas, notas verdes, aldehídos. Corazón: eucalipto, pino. Fondo: jazmín egipcio, lirio de los valles, rosa de Bulgaria.", image: "", isNew: false },
+            { id: 172, name: "Amber Gold", designer: "Xerjoff", category: "Árabes Unisex", stock: 10, family: "Oriental Vainilla", notes: "Salida: bergamota, notas verdes. Corazón: melón, piña, notas dulces, ámbar. Fondo: notas amaderadas, vainilla, almizcle.", image: "", isNew: false },
+            { id: 173, name: "Amber Aqua Dubai", designer: "Al Haramain", category: "Árabes Unisex", stock: 10, family: "Aromática Frutal", notes: "Salida: bergamota, notas verdes, mandarina. Corazón: melón, piña, grosellas negras, ámbar. Fondo: almizcle, petit grain, gálbano, vainilla.", image: "", isNew: false },
+            { id: 174, name: "Amber Dubai Night", designer: "Al Haramain", category: "Árabes Unisex", stock: 10, family: "Oriental Amaderada", notes: "Salida: azafrán, bergamota, elemí. Corazón: madera de oud, rosa, lirio de los valles. Fondo: haba tonka, ámbar, almizcle blanco, musgo de roble.", image: "", isNew: false },
+            { id: 175, name: "Amber Oud Gold", designer: "Al Haramain", category: "Árabes Unisex", stock: 10, family: "Oriental Vainilla", notes: "Salida: bergamota, notas verdes. Corazón: melón, piña, notas dulces, ámbar. Fondo: almizcle, vainilla, notas amaderadas.", image: "", isNew: false },
+            { id: 176, name: "Amber Private Edition", designer: "Al Haramain", category: "Árabes Unisex", stock: 10, family: "Oriental", notes: "Salida: bergamota, notas verdes. Corazón: melón, piña, cedro, ámbar. Fondo: resinas, almizcle, notas amaderadas, vainilla, mirra.", image: "", isNew: false },
+            { id: 177, name: "Amethyst", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Oriental Vainilla", notes: "Salida: pimienta rosa, bergamota. Corazón: rosa turca, rosa de Bulgaria, jazmín. Fondo: madera de oud, ámbar, vainilla.", image: "", isNew: false },
+            { id: 178, name: "Arabians Tonka", designer: "Montale", category: "Árabes Unisex", stock: 10, family: "Oriental Amaderada", notes: "Salida: azafrán, bergamota. Corazón: madera de oud, rosa de Bulgaria. Fondo: caña de azúcar, haba tonka, ámbar, almizcle blanco, musgo de roble.", image: "", isNew: false },
+            { id: 179, name: "Club de Nuit Bling", designer: "Armaf", category: "Árabes Unisex", stock: 10, family: "Amaderada Aromática", notes: "Salida: cítricos. Corazón: prisma floral, polvo de estrellas. Fondo: maderas aterciopeladas, vainilla.", image: "", isNew: false },
+            { id: 180, name: "Dunescape", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Aromática Frutal", notes: "Salida: mango, mandarina, pimienta rosa. Corazón: ylang-ylang, jazmín, lavanda. Fondo: vainilla, sándalo, haba tonka.", image: "", isNew: false },
+            { id: 181, name: "Erba pura", designer: "Xerjoff", category: "Árabes Unisex", stock: 10, family: "Oriental", notes: "Salida: naranja siciliana, bergamota de Calabria, limón siciliano. Corazón: frutas. Fondo: almizcle blanco, vainilla de Madagascar, ámbar.", image: "", isNew: false },
+            { id: 182, name: "Go Mango", designer: "Armaf", category: "Árabes Unisex", stock: 10, family: "Floral Frutal", notes: "Salida: mango, jengibre, pimienta rosa, limón. Corazón: notas amaderadas, jazmín, raíz de lirio. Fondo: ámbar, almizcle, cedro, madera de oud.", image: "", isNew: false },
+            { id: 183, name: "Honor y Glory", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Oriental Especiada", notes: "Salida: piña, crème brûlée. Corazón: canela, cúrcuma, pimienta negra, benjuí. Fondo: vainilla, cachemira, sándalo, musgo.", image: "", isNew: false },
+            { id: 184, name: "Khamrah", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Oriental Especiada", notes: "Salida: canela, nuez moscada, bergamota. Corazón: dátiles, praliné, nardos, mahonial. Fondo: vainilla, haba tonka, amberwood, mirra, benjuí, akigalawood.", image: "", isNew: false },
+            { id: 185, name: "Khamrah Qahwa", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Oriental Vainilla", notes: "Salida: canela, cardamomo, jengibre. Corazón: praliné, frutas confitadas, flores blancas. Fondo: vainilla, café, haba tonka, benjuí, almizcle.", image: "", isNew: false },
+            { id: 186, name: "Khamrah Waha", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Oriental Especiada", notes: "Salida: especias dulces, bergamota. Corazón: dátiles, flores blancas, praliné. Fondo: vainilla, ámbar, maderas.", image: "", isNew: false },
+            { id: 187, name: "Mandarín Sky Elixir", designer: "Armaf", category: "Árabes Unisex", stock: 10, family: "Oriental Amaderada", notes: "Salida: mandarina, naranja, cardamomo, jengibre, pimienta negra. Corazón: caramelo, haba tonka, lavanda, salvia, incienso. Fondo: vainilla, ambroxan, vetiver, cedro, pachuli.", image: "", isNew: false },
+            { id: 188, name: "Naxos", designer: "Xerjoff", category: "Árabes Unisex", stock: 10, family: "Cítrica Gourmand", notes: "Salida: lavanda, bergamota, limón. Corazón: miel, canela, cachemira, jazmín sambac. Fondo: hojas de tabaco, vainilla, haba tonka.", image: "", isNew: false },
+            { id: 189, name: "Oud for Glory", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Oriental Amaderada", notes: "Salida: azafrán, nuez moscada, lavanda. Corazón: madera de oud, pachuli. Fondo: madera de oud, pachuli, almizcle.", image: "", isNew: false },
+            { id: 190, name: "Sublime", designer: "Lattafa", category: "Árabes Unisex", stock: 10, family: "Aromática Frutal", notes: "Salida: manzana, lichi, rosa. Corazón: ciruela, jazmín. Fondo: musgo, vainilla, pachuli.", image: "", isNew: false },
+            { id: 191, name: "Torino 21", designer: "Xerjoff", category: "Árabes Unisex", stock: 10, family: "Aromática Verde", notes: "Salida: menta, limón, albahaca, tomillo. Corazón: grosellas negras, romero, lavanda, jazmín. Fondo: cedrón, almizcle.", image: "", isNew: false }
+        ];
+
+        const DEFAULT_SETTINGS = {
+            storeName: "Blue Essence",
+            storeSubtitle: "Extrait de Parfum 60ml • Línea Millanel",
+            sellerName: "Asesor Comercial",
+            sellerWhatsapp: "5493410000000",
+            sellerAlias: "blue.essence.mp",
+            adminPassword: "1234",
+            prices: {
+                general60: { tier1: 12000, tier5: 11000, tier10: 10000, tier61: 9500 },
+                millanel30: { tier1: 8000, tier5: 7500, tier10: 7000, tier61: 6500 },
+                millanel60: { tier1: 11000, tier5: 10000, tier10: 9500, tier61: 9000 },
+                millanel100: { tier1: 15000, tier5: 14000, tier10: 13000, tier61: 12000 }
+            },
+            zones: [
+                { id: "z1", name: "Rosario (A coordinar con el vendedor)", price: 0 },
+                { id: "z2", name: "Retiro en domicilio (Saavedra 1531)", price: 0 },
+                { id: "z3", name: "Zona Sur, Centro y Oeste", price: 4000 },
+                { id: "z4", name: "Zona Norte y Noroeste", price: 4500 },
+                { id: "z5", name: "Villa Gobernador Gálvez (VGG)", price: 5000 },
+                { id: "z6", name: "Baigorria y Pérez", price: 5500 }
+            ]
+        };
+
+        let products = JSON.parse(localStorage.getItem('blue_essence_products_v7')) || JSON.parse(JSON.stringify(INITIAL_PRODUCTS));
+        let settings = JSON.parse(localStorage.getItem('blue_essence_settings_v7')) || JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+        
+        products.forEach(p => {
+            if (typeof p.stock !== 'number') {
+                p.stock = p.inStock === false ? 0 : 10;
+            }
+        });
+
+        let cart = [];
+        let selectedMillanelSizes = {};
+        let currentFilter = 'todos';
+        let editingProductId = null;
+
+        function saveData() {
+            try {
+                localStorage.setItem('blue_essence_products_v7', JSON.stringify(products));
+                localStorage.setItem('blue_essence_settings_v7', JSON.stringify(settings));
+            } catch (e) {
+                alert("⚠️ Se alcanzó el límite de memoria local por imágenes pesadas.");
+            }
+        }
+
+        function requestAdminAccess() {
+            const pass = prompt("Ingrese la contraseña de Administrador:");
+            if (pass === null) return;
+            const currentPass = settings.adminPassword || "1234";
+            if (pass === currentPass) {
+                openAdminModal();
+            } else {
+                alert("Contraseña incorrecta. Acceso denegado.");
+            }
+        }
+
+        function getCategoryBadgeStyle(cat) {
+            if (cat === 'Perfumes Millanel') return 'bg-purple-50 text-purple-700 border-purple-200';
+            if (cat.includes('Femeninos')) return 'bg-pink-50 text-pink-700 border-pink-200';
+            if (cat.includes('Masculinos')) return 'bg-blue-50 text-blue-700 border-blue-200';
+            return 'bg-amber-50 text-amber-700 border-amber-200';
+        }
+
+        function applySettingsToUI() {
+            document.getElementById('header-store-name').innerText = settings.storeName;
+            document.getElementById('header-store-subtitle').innerText = settings.storeSubtitle;
+            document.getElementById('footer-store-name').innerText = settings.storeName;
+            document.getElementById('footer-seller-info').innerText = `Atendido por ${settings.sellerName} • Pedidos directos por WhatsApp`;
+            document.getElementById('display-seller-alias').innerText = settings.sellerAlias;
+            document.getElementById('mob-display-seller-alias').innerText = settings.sellerAlias;
+            document.getElementById('total-count-badge').innerText = products.length;
+
+            const p60 = settings.prices.general60;
+            const tiersGrid = document.getElementById('tiers-banner-grid');
+            tiersGrid.innerHTML = `
+                <div class="bg-white/10 border border-white/15 p-2.5 sm:p-3 rounded-xl">
+                    <span class="block text-blue-200 text-[10px] sm:text-[11px]">1 a 4 un.</span>
+                    <strong class="text-white text-xs sm:text-base font-bold">$${Number(p60.tier1).toLocaleString()}</strong>
+                </div>
+                <div class="bg-white/10 border border-white/15 p-2.5 sm:p-3 rounded-xl">
+                    <span class="block text-blue-200 text-[10px] sm:text-[11px]">5 a 9 un.</span>
+                    <strong class="text-white text-xs sm:text-base font-bold">$${Number(p60.tier5).toLocaleString()}</strong>
+                </div>
+                <div class="bg-white/10 border border-white/15 p-2.5 sm:p-3 rounded-xl">
+                    <span class="block text-blue-200 text-[10px] sm:text-[11px]">10 a 60 un.</span>
+                    <strong class="text-emerald-300 text-xs sm:text-base font-bold">$${Number(p60.tier10).toLocaleString()}</strong>
+                </div>
+                <div class="bg-white/10 border border-white/15 p-2.5 sm:p-3 rounded-xl">
+                    <span class="block text-blue-200 text-[10px] sm:text-[11px]">61+ un.</span>
+                    <strong class="text-emerald-300 text-xs sm:text-base font-bold">$${Number(p60.tier61).toLocaleString()}</strong>
+                </div>
+            `;
+
+            const zoneSelect = document.getElementById('shipping-zone');
+            const mobZoneSelect = document.getElementById('mobile-shipping-zone');
+            const prevVal = zoneSelect.value;
+            
+            zoneSelect.innerHTML = '';
+            mobZoneSelect.innerHTML = '';
+
+            settings.zones.forEach((z, idx) => {
+                const text = z.price > 0 ? `${z.name} ($${Number(z.price).toLocaleString()})` : `${z.name} (Sin cargo)`;
+                const opt1 = document.createElement('option'); opt1.value = idx; opt1.text = text;
+                zoneSelect.appendChild(opt1);
+
+                const opt2 = document.createElement('option'); opt2.value = idx; opt2.text = text;
+                mobZoneSelect.appendChild(opt2);
+            });
+
+            if (prevVal && zoneSelect.options[prevVal]) {
+                zoneSelect.value = prevVal;
+                mobZoneSelect.value = prevVal;
+            }
+        }
+
+        function getUnitPriceForItem(item, totalUnitsInCart) {
+            let table = settings.prices.general60;
+            if (item.category === 'Perfumes Millanel') {
+                if (item.size === '30ml') table = settings.prices.millanel30;
+                else if (item.size === '100ml') table = settings.prices.millanel100;
+                else table = settings.prices.millanel60;
+            }
+            
+            if (totalUnitsInCart >= 61) return Number(table.tier61);
+            if (totalUnitsInCart >= 10) return Number(table.tier10);
+            if (totalUnitsInCart >= 5) return Number(table.tier5);
+            return Number(table.tier1);
+        }
+
+        function getActiveSizeForProduct(p) {
+            if (p.category !== 'Perfumes Millanel') return "60ml";
+            return selectedMillanelSizes[p.id] || "60ml";
+        }
+
+        function changeMillanelSize(productId, size) {
+            selectedMillanelSizes[productId] = size;
+            renderCatalog();
+        }
+
+        function getTotalCountInCartForProduct(id) {
+            return cart.filter(item => item.id === id).length;
+        }
+
+        function getItemCountInCartBySize(id, size) {
+            return cart.filter(item => item.id === id && item.size === size).length;
+        }
+
+        function renderNewArrivals() {
+            const container = document.getElementById('new-arrivals-carousel');
+            const newProducts = products.filter(p => p.isNew && p.stock > 0);
+            
+            if (newProducts.length === 0) {
+                container.innerHTML = `<div class="col-span-3 text-center text-xs text-slate-400 py-3">No hay nuevos ingresos disponibles actualmente.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            newProducts.slice(0, 3).forEach(p => {
+                const badgeStyle = getCategoryBadgeStyle(p.category);
+                const imgHTML = p.image ? `<img src="${p.image}" alt="${p.name}" class="w-12 h-12 object-cover rounded-lg border border-slate-200 shrink-0">` : '';
+                const div = document.createElement('div');
+                div.className = "bg-slate-50 border border-slate-200 rounded-xl p-3 flex flex-col justify-between hover:border-blue-500 transition";
+                div.innerHTML = `
+                    <div class="flex items-start gap-2.5">
+                        ${imgHTML}
+                        <div class="min-w-0 flex-grow">
+                            <span class="text-[8px] ${badgeStyle} border font-bold px-1.5 py-0.5 rounded-full uppercase truncate">${p.category}</span>
+                            <h4 class="font-extrabold text-[#0B192C] text-xs mt-1 truncate">${p.name}</h4>
+                            <p class="text-[10px] text-slate-500 truncate">${p.designer}</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-2 border-t border-slate-200 flex justify-between items-center">
+                        <span class="text-[10px] font-semibold text-slate-600">60ml • Disp: ${p.stock}</span>
+                        <button onclick="addToCart(${p.id}, '60ml')" class="bg-[#0B192C] hover:bg-blue-900 text-white text-[10px] px-2.5 py-1 rounded-lg font-bold cursor-pointer">+ Sumar</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderCatalog() {
+            renderNewArrivals();
+            const grid = document.getElementById('product-grid');
+            const searchVal = document.getElementById('search-input').value.toLowerCase().trim();
+            const onlyAvail = document.getElementById('only-available').checked;
+            grid.innerHTML = '';
+
+            let filtered = currentFilter === 'todos' ? products : products.filter(p => p.category === currentFilter);
+            if (onlyAvail) filtered = filtered.filter(p => p.stock > 0);
+
+            if (searchVal) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchVal) || p.designer.toLowerCase().includes(searchVal) || (p.notes && p.notes.toLowerCase().includes(searchVal)) || (p.family && p.family.toLowerCase().includes(searchVal)));
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-2 text-center py-14 text-slate-400 bg-white rounded-2xl border border-slate-200 text-xs">No se encontraron fragancias con esos filtros.</div>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const isOutOfStock = p.stock <= 0;
+                const isMillanel = p.category === 'Perfumes Millanel';
+                const card = document.createElement('div');
+                card.className = `bg-white border ${isOutOfStock ? 'border-red-300 bg-red-50/20' : 'border-slate-200 hover:border-blue-600/50'} rounded-2xl p-3 sm:p-4 flex flex-col justify-between transition shadow-xs`;
+                
+                const activeSize = getActiveSizeForProduct(p);
+                const countInCartForSize = getItemCountInCartBySize(p.id, activeSize);
+                const totalInCartForProd = getTotalCountInCartForProduct(p.id);
+                const badgeStyle = getCategoryBadgeStyle(p.category);
+
+                const imageBlockHTML = p.image ? `
+                    <div class="w-full h-28 sm:h-36 mb-2.5 rounded-xl overflow-hidden bg-slate-100 border border-slate-200 flex items-center justify-center">
+                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
+                    </div>
+                ` : '';
+
+                const sizes = ["30ml", "60ml", "100ml"];
+                const sizeSelectorHTML = (!isOutOfStock && isMillanel) ? `
+                    <div class="flex items-center gap-1 mt-2 bg-purple-50 border border-purple-200 p-1 rounded-xl">
+                        ${sizes.map(sz => `
+                            <button onclick="changeMillanelSize(${p.id}, '${sz}')" class="flex-1 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer ${activeSize === sz ? 'bg-purple-800 text-white shadow-xs' : 'text-purple-800 hover:bg-white/80'}">
+                                ${sz}
+                            </button>
+                        `).join('')}
+                    </div>
+                ` : '';
+
+                let actionHTML = isOutOfStock 
+                    ? `<span class="w-full text-center bg-red-600 text-white text-[10px] sm:text-[11px] px-2.5 py-1.5 rounded-xl font-extrabold uppercase tracking-wide shadow-xs">🔴 Faltante / Sin Stock</span>`
+                    : `
+                        <div class="flex items-center justify-between w-full gap-1">
+                            <div class="flex flex-col">
+                                <span class="text-[10px] text-slate-600 font-bold">${activeSize}</span>
+                                <span class="text-[9px] text-slate-400">Disp: ${p.stock}</span>
+                            </div>
+                            <div class="flex items-center gap-1 bg-slate-100 border border-slate-200 rounded-xl p-0.5 sm:p-1">
+                                <button onclick="removeUnitFromCart(${p.id}, '${activeSize}')" class="w-6 h-6 sm:w-7 sm:h-7 bg-white hover:bg-slate-200 text-slate-800 rounded-lg font-bold flex items-center justify-center transition cursor-pointer text-xs">-</button>
+                                <span class="w-5 sm:w-6 text-center font-bold text-blue-600 text-xs">${countInCartForSize}</span>
+                                <button onclick="addToCart(${p.id}, '${activeSize}')" ${totalInCartForProd >= p.stock ? 'disabled' : ''} class="w-6 h-6 sm:w-7 sm:h-7 ${totalInCartForProd >= p.stock ? 'bg-slate-300 cursor-not-allowed' : 'bg-[#0B192C] hover:opacity-90 cursor-pointer'} text-white rounded-lg font-bold flex items-center justify-center transition text-xs">+</button>
+                            </div>
+                        </div>
+                    `;
+
+                card.innerHTML = `
+                    <div>
+                        ${imageBlockHTML}
+                        <div class="flex items-start justify-between gap-1.5">
+                            <div class="min-w-0 flex-grow">
+                                <div class="flex items-center gap-1 flex-wrap">
+                                    <span class="text-[9px] font-bold uppercase tracking-wider text-slate-700 truncate max-w-[110px]">${p.designer}</span>
+                                    <span class="text-[8px] sm:text-[9px] font-bold px-1.5 py-0.2 rounded border ${badgeStyle}">${p.category}</span>
+                                </div>
+                                <h4 class="font-extrabold ${isOutOfStock ? 'text-red-700' : 'text-[#0B192C]'} text-xs sm:text-sm truncate mt-1" title="${p.name}">${p.name}</h4>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-2 line-clamp-2 sm:line-clamp-3 leading-relaxed bg-slate-50 p-2 rounded-xl border border-slate-100 font-normal">
+                            🌿 ${p.notes || 'Alta fijación.'}
+                        </p>
+                        ${sizeSelectorHTML}
+                    </div>
+                    <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-1">
+                        ${actionHTML}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterCategory(cat, btnEl) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(btn => {
+                if (btn.innerText.includes('Millanel')) {
+                    btn.className = "cat-btn bg-purple-100 text-purple-800 hover:bg-purple-200 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer whitespace-nowrap";
+                } else {
+                    btn.className = "cat-btn bg-slate-100 text-slate-600 hover:bg-slate-200 px-3 py-2 rounded-xl text-xs font-medium transition cursor-pointer whitespace-nowrap";
+                }
+            });
+            btnEl.className = "cat-btn bg-[#0B192C] text-white font-semibold px-3 py-2 rounded-xl text-xs transition cursor-pointer whitespace-nowrap";
+            renderCatalog();
+        }
+
+        function addToCart(id, sizeOverride) {
+            const prod = products.find(p => p.id === id);
+            if (!prod || prod.stock <= 0) return;
+
+            const totalInCart = getTotalCountInCartForProduct(id);
+            if (totalInCart >= prod.stock) {
+                alert(`Solo hay ${prod.stock} unidades disponibles de ${prod.name}.`);
+                return;
+            }
+
+            const size = prod.category === 'Perfumes Millanel' ? (sizeOverride || getActiveSizeForProduct(prod)) : "60ml";
+            cart.push({ id: prod.id, name: prod.name, designer: prod.designer, size: size, category: prod.category });
+            updateCartUI();
+        }
+
+        function removeUnitFromCart(id, sizeOverride) {
+            const prod = products.find(p => p.id === id);
+            const size = prod && prod.category === 'Perfumes Millanel' ? (sizeOverride || getActiveSizeForProduct(prod)) : "60ml";
+            const index = cart.findIndex(item => item.id === id && item.size === size);
+            if (index !== -1) {
+                cart.splice(index, 1);
+                updateCartUI();
+            }
+        }
+
+        function removeAllOfItemAndSize(id, size) {
+            cart = cart.filter(item => !(item.id === id && item.size === size));
+            updateCartUI();
+        }
+
+        function syncAndEvaluateZones(val) {
+            document.getElementById('shipping-zone').value = val;
+            document.getElementById('mobile-shipping-zone').value = val;
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const totalUnits = cart.length;
+
+            document.getElementById('cart-count').innerText = `${totalUnits} un.`;
+            document.getElementById('mobile-cart-badge').innerText = totalUnits;
+            
+            const floatingCart = document.getElementById('mobile-floating-cart');
+            if (totalUnits > 0) {
+                floatingCart.classList.remove('translate-y-32');
+            } else {
+                floatingCart.classList.add('translate-y-32');
+            }
+
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += getUnitPriceForItem(item, totalUnits);
+            });
+
+            const zoneIdx = document.getElementById('shipping-zone').value || 0;
+            const selectedZone = settings.zones[zoneIdx] || { name: "Envío", price: 0 };
+            let shippingCost = Number(selectedZone.price);
+            let total = subtotal + shippingCost;
+
+            document.getElementById('floating-cart-units').innerText = `${totalUnits} ${totalUnits === 1 ? 'unidad seleccionada' : 'unidades seleccionadas'}`;
+            document.getElementById('floating-cart-total').innerText = `$${total.toLocaleString()}`;
+
+            let tierText = "";
+            if (totalUnits >= 61) {
+                tierText = `🏆 <strong>Nivel Mayorista Máximo (61+ un.)</strong> aplicado`;
+            } else if (totalUnits >= 10) {
+                tierText = `✨ <strong>Nivel 10-60 un.</strong> aplicado (Faltan ${61 - totalUnits} para escala máxima)`;
+            } else if (totalUnits >= 5) {
+                tierText = `👍 <strong>Nivel 5-9 un.</strong> aplicado (Faltan ${10 - totalUnits} para mayor descuento)`;
+            } else if (totalUnits > 0) {
+                tierText = `Faltan <strong>${5 - totalUnits} un.</strong> para acceder a precios mayoristas`;
+            } else {
+                tierText = `Agregá fragancias para calcular tu descuento`;
+            }
+
+            document.getElementById('tier-badge-container').innerHTML = tierText;
+            document.getElementById('mobile-tier-badge-container').innerHTML = tierText;
+
+            const desktopContainer = document.getElementById('cart-items');
+            const mobileContainer = document.getElementById('mobile-cart-items');
+
+            if (totalUnits === 0) {
+                const emptyHTML = `<div class="text-center py-6 text-slate-400 text-xs">🛍️ Tu carrito está vacío</div>`;
+                desktopContainer.innerHTML = emptyHTML;
+                mobileContainer.innerHTML = emptyHTML;
+            } else {
+                let grouped = {};
+                cart.forEach(item => {
+                    const key = `${item.id}_${item.size}`;
+                    if (!grouped[key]) {
+                        grouped[key] = { ...item, qty: 0 };
+                    }
+                    grouped[key].qty++;
+                });
+
+                let itemsHTML = '';
+                Object.values(grouped).forEach(info => {
+                    const unitP = getUnitPriceForItem(info, totalUnits);
+                    const itemTotal = info.qty * unitP;
+                    itemsHTML += `
+                        <div class="py-2 flex justify-between items-center gap-2">
+                            <div class="min-w-0">
+                                <h5 class="text-xs font-bold truncate">${info.name} <span class="bg-blue-100 text-blue-800 px-1.5 py-0.5 rounded text-[10px]">${info.size}</span> <span class="text-blue-700">x${info.qty}</span></h5>
+                                <p class="text-[10px] text-slate-500 truncate">${info.designer} • $${itemTotal.toLocaleString()} ($${unitP.toLocaleString()} c/u)</p>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <button onclick="removeUnitFromCart(${info.id}, '${info.size}')" class="w-6 h-6 bg-slate-100 rounded font-bold text-xs cursor-pointer">-</button>
+                                <button onclick="addToCart(${info.id}, '${info.size}')" class="w-6 h-6 bg-slate-100 rounded font-bold text-xs cursor-pointer">+</button>
+                                <button onclick="removeAllOfItemAndSize(${info.id}, '${info.size}')" class="text-slate-400 hover:text-red-500 text-xs px-1 cursor-pointer">✕</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                desktopContainer.innerHTML = itemsHTML;
+                mobileContainer.innerHTML = itemsHTML;
+            }
+
+            document.getElementById('cart-subtotal').innerText = `$${subtotal.toLocaleString()}`;
+            document.getElementById('cart-shipping').innerText = shippingCost > 0 ? `$${shippingCost.toLocaleString()}` : 'A acordar / Sin cargo';
+            document.getElementById('cart-total').innerText = `$${total.toLocaleString()}`;
+
+            document.getElementById('mob-cart-subtotal').innerText = `$${subtotal.toLocaleString()}`;
+            document.getElementById('mob-cart-shipping').innerText = shippingCost > 0 ? `$${shippingCost.toLocaleString()}` : 'A acordar / Sin cargo';
+            document.getElementById('mob-cart-total').innerText = `$${total.toLocaleString()}`;
+
+            renderCatalog();
+        }
+
+        function toggleMobileCartModal(open) {
+            const modal = document.getElementById('mobile-cart-modal');
+            if (open) {
+                modal.classList.remove('hidden');
+                document.getElementById('mob-client-name').value = document.getElementById('client-name').value;
+                document.getElementById('mob-client-phone').value = document.getElementById('client-phone').value;
+                document.getElementById('mob-client-address').value = document.getElementById('client-address').value;
+                document.getElementById('mob-client-change').value = document.getElementById('client-change').value;
+                document.getElementById('mob-client-notes').value = document.getElementById('client-notes').value;
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function togglePaymentDetails() {
+            const pay = document.getElementById('client-payment').value;
+            document.getElementById('client-change').classList.toggle('hidden', pay !== 'Efectivo');
+            document.getElementById('transfer-info-box').classList.toggle('hidden', pay === 'Efectivo');
+        }
+
+        function toggleMobilePaymentDetails() {
+            const pay = document.getElementById('mob-client-payment').value;
+            document.getElementById('mob-client-change').classList.toggle('hidden', pay !== 'Efectivo');
+            document.getElementById('mob-transfer-info-box').classList.toggle('hidden', pay === 'Efectivo');
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return alert("Tu carrito está vacío.");
+            const name = document.getElementById('client-name').value.trim();
+            const phone = document.getElementById('client-phone').value.trim();
+            const address = document.getElementById('client-address').value.trim();
+            const payment = document.getElementById('client-payment').value;
+            const change = document.getElementById('client-change').value.trim();
+            const notes = document.getElementById('client-notes').value.trim();
+            const zoneIdx = document.getElementById('shipping-zone').value || 0;
+            const selectedZone = settings.zones[zoneIdx];
+
+            if (!name) return alert("Completá tu Nombre y Apellido.");
+            if (!address) return alert("Completá tu Dirección de entrega o retiro.");
+
+            executeWhatsAppOrder(name, phone, address, payment, change, notes, selectedZone);
+        }
+
+        function checkoutWhatsAppMobile() {
+            if (cart.length === 0) return alert("Tu carrito está vacío.");
+            const name = document.getElementById('mob-client-name').value.trim();
+            const phone = document.getElementById('mob-client-phone').value.trim();
+            const address = document.getElementById('mob-client-address').value.trim();
+            const payment = document.getElementById('mob-client-payment').value;
+            const change = document.getElementById('mob-client-change').value.trim();
+            const notes = document.getElementById('mob-client-notes').value.trim();
+            const zoneIdx = document.getElementById('mobile-shipping-zone').value || 0;
+            const selectedZone = settings.zones[zoneIdx];
+
+            if (!name) return alert("Completá tu Nombre y Apellido.");
+            if (!address) return alert("Completá tu Dirección de entrega o retiro.");
+
+            executeWhatsAppOrder(name, phone, address, payment, change, notes, selectedZone);
+        }
+
+        function executeWhatsAppOrder(name, phone, address, payment, change, notes, selectedZone) {
+            const totalUnits = cart.length;
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += getUnitPriceForItem(item, totalUnits);
+            });
+
+            let shippingCost = Number(selectedZone.price);
+            let total = subtotal + shippingCost;
+
+            let message = `*NUEVO PEDIDO - ${settings.storeName.toUpperCase()}* ✨\n\n`;
+            message += `👤 *Cliente:* ${name}\n`;
+            if (phone) message += `📱 *Teléfono:* ${phone}\n`;
+            message += `📍 *Dirección/Zona:* ${address}\n`;
+            message += `🚚 *Método de Entrega:* ${selectedZone.name}${shippingCost > 0 ? ` ($${shippingCost.toLocaleString()})` : ' (A acordar)'}\n`;
+            message += `💳 *Pago:* ${payment}\n`;
+            if (payment === 'Efectivo' && change) message += `💵 *Abona con:* $${change}\n`;
+            if (notes) message += `📝 *Notas:* ${notes}\n`;
+
+            message += `\n*FRAGANCIAS (${totalUnits} un. en total):*\n`;
+
+            let grouped = {};
+            cart.forEach(item => {
+                const key = `${item.id}_${item.size}`;
+                if (!grouped[key]) grouped[key] = { ...item, qty: 0 };
+                grouped[key].qty++;
+            });
+
+            let i = 1;
+            Object.values(grouped).forEach(info => {
+                const unitP = getUnitPriceForItem(info, totalUnits);
+                message += `${i}. *${info.name}* (${info.designer}) [${info.size}] x ${info.qty}u ($${(unitP * info.qty).toLocaleString()})\n`;
+                i++;
+            });
+
+            message += `\n────────────────────\nSubtotal: $${subtotal.toLocaleString()}\nEnvío: ${shippingCost > 0 ? '$' + shippingCost.toLocaleString() : 'A acordar'}\n*TOTAL: $${total.toLocaleString()}*`;
+
+            cart.forEach(item => {
+                const prod = products.find(p => p.id === item.id);
+                if (prod && prod.stock > 0) {
+                    prod.stock--;
+                }
+            });
+            saveData();
+            cart = [];
+            updateCartUI();
+            toggleMobileCartModal(false);
+
+            const cleanPhone = settings.sellerWhatsapp.replace(/\D/g, '');
+            window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function handleImageFileUpload(input) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 450;
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > h && w > maxDim) {
+                        h = Math.round(h * (maxDim / w));
+                        w = maxDim;
+                    } else if (h > maxDim) {
+                        w = Math.round(w * (maxDim / h));
+                        h = maxDim;
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.78);
+                    
+                    document.getElementById('edit-image-input').value = compressedDataUrl;
+                    updateImagePreview(compressedDataUrl);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateImagePreview(url) {
+            const previewBox = document.getElementById('edit-image-preview-box');
+            const previewImg = document.getElementById('edit-image-preview');
+            const clearBtn = document.getElementById('btn-clear-image');
+            if (url && url.trim() !== '') {
+                previewImg.src = url.trim();
+                previewBox.classList.remove('hidden');
+                clearBtn.classList.remove('hidden');
+            } else {
+                previewImg.src = '';
+                previewBox.classList.add('hidden');
+                clearBtn.classList.add('hidden');
+            }
+        }
+
+        function clearProductImage() {
+            document.getElementById('edit-image-input').value = '';
+            document.getElementById('edit-image-file').value = '';
+            updateImagePreview('');
+        }
+
+        // --- ADMIN & INVENTARIO (Faltantes ordenados primero) ---
+        function openAdminModal() {
+            renderAdminList();
+            
+            const mapKeys = [
+                { key: "general60", prefix: "60" },
+                { key: "millanel30", prefix: "m30" },
+                { key: "millanel60", prefix: "m60" },
+                { key: "millanel100", prefix: "m100" }
+            ];
+            mapKeys.forEach(({ key, prefix }) => {
+                document.getElementById(`cfg-${prefix}-1`).value = settings.prices[key].tier1;
+                document.getElementById(`cfg-${prefix}-5`).value = settings.prices[key].tier5;
+                document.getElementById(`cfg-${prefix}-10`).value = settings.prices[key].tier10;
+                document.getElementById(`cfg-${prefix}-61`).value = settings.prices[key].tier61;
+            });
+
+            const zContainer = document.getElementById('cfg-zones-list');
+            zContainer.innerHTML = '';
+            settings.zones.forEach((z, idx) => {
+                zContainer.innerHTML += `
+                    <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1.5">
+                        <input type="text" id="cfg-zone-name-${idx}" value="${z.name}" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-semibold">
+                        <input type="number" id="cfg-zone-price-${idx}" value="${z.price}" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold" placeholder="0 = A acordar">
+                    </div>
+                `;
+            });
+
+            document.getElementById('cfg-store-name').value = settings.storeName;
+            document.getElementById('cfg-seller-name').value = settings.sellerName;
+            document.getElementById('cfg-seller-whatsapp').value = settings.sellerWhatsapp;
+            document.getElementById('cfg-seller-alias').value = settings.sellerAlias;
+            document.getElementById('cfg-admin-pass').value = settings.adminPassword || "1234";
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() { document.getElementById('admin-modal').classList.add('hidden'); }
+
+        function switchAdminTab(tabId, btnEl) {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.className = "admin-tab-btn bg-slate-100 text-slate-600 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer whitespace-nowrap";
+            });
+            btnEl.className = "admin-tab-btn bg-[#0B192C] text-white px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer whitespace-nowrap";
+        }
+
+        function renderAdminList() {
+            const list = document.getElementById('admin-products-list');
+            const searchVal = document.getElementById('admin-search').value.toLowerCase().trim();
+            list.innerHTML = '';
+
+            let filtered = searchVal ? products.filter(p => p.name.toLowerCase().includes(searchVal) || p.designer.toLowerCase().includes(searchVal) || p.category.toLowerCase().includes(searchVal)) : [...products];
+
+            // ORDENAR: Los que tienen stock <= 0 (faltantes) van primero
+            filtered.sort((a, b) => {
+                const aZero = a.stock <= 0 ? 0 : 1;
+                const bZero = b.stock <= 0 ? 0 : 1;
+                return aZero - bZero;
+            });
+
+            filtered.forEach(p => {
+                const badgeStyle = getCategoryBadgeStyle(p.category);
+                const isZero = p.stock <= 0;
+                const thumbHTML = p.image ? `<img src="${p.image}" class="w-8 h-8 rounded-lg object-cover border border-slate-200 shrink-0">` : '';
+                const div = document.createElement('div');
+                div.className = `py-2.5 flex flex-wrap sm:flex-nowrap justify-between items-center gap-2 ${isZero ? 'bg-red-50/80 px-2.5 rounded-xl border border-red-200' : ''}`;
+                div.innerHTML = `
+                    <div class="flex items-center gap-2 min-w-0 flex-grow">
+                        ${thumbHTML}
+                        <div class="min-w-0">
+                            <h5 class="text-xs font-bold truncate ${isZero ? 'text-red-700' : 'text-[#0B192C]'}">${p.name} <span class="text-slate-400 font-normal">(${p.designer})</span> ${p.isNew ? '⭐' : ''}</h5>
+                            <div class="flex items-center gap-1.5 mt-0.5">
+                                <span class="text-[9px] font-bold px-1.5 py-0.2 rounded border ${badgeStyle}">${p.category}</span>
+                                ${isZero ? '<span class="text-[9px] font-extrabold text-red-600 uppercase">🔴 Faltante</span>' : ''}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <div class="flex items-center bg-slate-100 border border-slate-200 rounded-lg p-0.5">
+                            <button onclick="adjustStock(${p.id}, -1)" class="w-6 h-6 bg-white hover:bg-slate-200 rounded text-xs font-bold cursor-pointer">-</button>
+                            <input type="number" min="0" value="${p.stock}" onchange="setStockExact(${p.id}, this.value)" class="w-10 text-center text-xs font-extrabold bg-transparent ${isZero ? 'text-red-600' : 'text-[#0B192C]'}">
+                            <button onclick="adjustStock(${p.id}, 1)" class="w-6 h-6 bg-white hover:bg-slate-200 rounded text-xs font-bold cursor-pointer">+</button>
+                        </div>
+                        <button onclick="openEditModal(${p.id})" class="bg-slate-100 hover:bg-slate-200 text-xs px-2.5 py-1.5 rounded-lg font-medium cursor-pointer" title="Editar detalles y foto">✏️</button>
+                        <button onclick="deleteProduct(${p.id})" class="bg-red-50 hover:bg-red-100 text-red-600 text-xs px-2 py-1.5 rounded-lg font-bold cursor-pointer" title="Eliminar">🗑️</button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function adjustStock(id, delta) {
+            const p = products.find(prod => prod.id === id);
+            if (p) {
+                p.stock = Math.max(0, p.stock + delta);
+                saveData();
+                renderAdminList();
+                renderCatalog();
+            }
+        }
+
+        function setStockExact(id, val) {
+            const p = products.find(prod => prod.id === id);
+            if (p) {
+                p.stock = Math.max(0, parseInt(val, 10) || 0);
+                saveData();
+                renderAdminList();
+                renderCatalog();
+            }
+        }
+
+        function deleteProduct(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            if (confirm(`¿Eliminar permanentemente "${p.name}" (${p.designer})?`)) {
+                products = products.filter(prod => prod.id !== id);
+                saveData();
+                applySettingsToUI();
+                renderAdminList();
+                renderCatalog();
+            }
+        }
+
+        function openEditModal(id) {
+            editingProductId = id;
+            const p = products.find(prod => prod.id === id);
+            document.getElementById('edit-modal-title').innerText = `Editar Fragancia`;
+            document.getElementById('edit-name-input').value = p.name;
+            document.getElementById('edit-designer-input').value = p.designer;
+            document.getElementById('edit-category-input').value = p.category;
+            document.getElementById('edit-stock-input').value = p.stock;
+            document.getElementById('edit-family-input').value = p.family || '';
+            document.getElementById('edit-notes-input').value = p.notes || '';
+            document.getElementById('edit-image-input').value = p.image || '';
+            document.getElementById('edit-image-file').value = '';
+            updateImagePreview(p.image || '');
+            document.getElementById('edit-new-input').checked = !!p.isNew;
+            document.getElementById('edit-product-modal').classList.remove('hidden');
+        }
+
+        function openAddProductPrompt() {
+            editingProductId = null;
+            document.getElementById('edit-modal-title').innerText = `➕ Nuevo Perfume`;
+            document.getElementById('edit-name-input').value = '';
+            document.getElementById('edit-designer-input').value = '';
+            document.getElementById('edit-category-input').value = 'Perfumes Millanel';
+            document.getElementById('edit-stock-input').value = 10;
+            document.getElementById('edit-family-input').value = '';
+            document.getElementById('edit-notes-input').value = '';
+            document.getElementById('edit-image-input').value = '';
+            document.getElementById('edit-image-file').value = '';
+            updateImagePreview('');
+            document.getElementById('edit-new-input').checked = true;
+            document.getElementById('edit-product-modal').classList.remove('hidden');
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-product-modal').classList.add('hidden');
+            editingProductId = null;
+        }
+
+        function saveProductDetails() {
+            const name = document.getElementById('edit-name-input').value.trim();
+            const designer = document.getElementById('edit-designer-input').value.trim();
+            if (!name || !designer) return alert("Completá el nombre y el diseñador/marca.");
+
+            const cat = document.getElementById('edit-category-input').value;
+            const stock = Math.max(0, parseInt(document.getElementById('edit-stock-input').value, 10) || 0);
+            const family = document.getElementById('edit-family-input').value.trim();
+            const notes = document.getElementById('edit-notes-input').value.trim();
+            const image = document.getElementById('edit-image-input').value.trim();
+            const isNew = document.getElementById('edit-new-input').checked;
+
+            if (editingProductId) {
+                const p = products.find(prod => prod.id === editingProductId);
+                if (p) {
+                    p.name = name;
+                    p.designer = designer;
+                    p.category = cat;
+                    p.stock = stock;
+                    p.family = family;
+                    p.notes = notes;
+                    p.image = image;
+                    p.isNew = isNew;
+                }
+            } else {
+                const newId = products.length ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                products.unshift({ id: newId, name, designer, category: cat, stock, family, notes, image, isNew });
+            }
+
+            saveData();
+            applySettingsToUI();
+            renderAdminList();
+            renderCatalog();
+            closeEditModal();
+        }
+
+        function saveSettingsAndClose() {
+            const mapKeys = [
+                { key: "general60", prefix: "60" },
+                { key: "millanel30", prefix: "m30" },
+                { key: "millanel60", prefix: "m60" },
+                { key: "millanel100", prefix: "m100" }
+            ];
+            mapKeys.forEach(({ key, prefix }) => {
+                settings.prices[key].tier1 = Number(document.getElementById(`cfg-${prefix}-1`).value) || 0;
+                settings.prices[key].tier5 = Number(document.getElementById(`cfg-${prefix}-5`).value) || 0;
+                settings.prices[key].tier10 = Number(document.getElementById(`cfg-${prefix}-10`).value) || 0;
+                settings.prices[key].tier61 = Number(document.getElementById(`cfg-${prefix}-61`).value) || 0;
+            });
+
+            settings.zones.forEach((z, idx) => {
+                z.name = document.getElementById(`cfg-zone-name-${idx}`).value.trim() || z.name;
+                z.price = Number(document.getElementById(`cfg-zone-price-${idx}`).value) || 0;
+            });
+            settings.storeName = document.getElementById('cfg-store-name').value.trim();
+            settings.sellerName = document.getElementById('cfg-seller-name').value.trim();
+            settings.sellerWhatsapp = document.getElementById('cfg-seller-whatsapp').value.trim();
+            settings.sellerAlias = document.getElementById('cfg-seller-alias').value.trim();
+            settings.adminPassword = document.getElementById('cfg-admin-pass').value.trim() || "1234";
+            saveData();
+            applySettingsToUI();
+            updateCartUI();
+            closeAdminModal();
+        }
+
+        function resetAllDefaults() {
+            if (confirm("¿Restaurar los 191 perfumes originales y configuración de fábrica?")) {
+                products = JSON.parse(JSON.stringify(INITIAL_PRODUCTS));
+                settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+                saveData();
+                applySettingsToUI();
+                updateCartUI();
+                renderAdminList();
+            }
+        }
+
+        applySettingsToUI();
+        updateCartUI();
+    </script>
+</body>
+</html>
